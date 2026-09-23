@@ -1,9 +1,9 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import L from 'leaflet';
 import { useRelocation } from '../context/RelocationContext';
-import { nearbyCategories, nearbyServicesData, campusCoordinates } from '../data/mockData';
+import { nearbyCategories, nearbyServicesData } from '../data/mockData';
 import { maskPhoneNumber } from '../utils/phoneUtils';
+import PlutoMap from '../components/PlutoMap';
 
 export default function Nearby() {
   const { category: routeCategory } = useParams();
@@ -15,9 +15,6 @@ export default function Nearby() {
   const [selectedVendor, setSelectedVendor] = useState(null); // For "View Details" modal
   const [isMapView, setIsMapView] = useState(false); // Only toggled by the single View Map button
 
-  const mapRef = useRef(null);
-  const leafletInstance = useRef(null);
-
   // Sync route param with state if user directly loaded a category route
   useEffect(() => {
     if (routeCategory && nearbyServicesData[routeCategory]) {
@@ -27,100 +24,6 @@ export default function Nearby() {
 
   const currentCatObj = nearbyCategories.find(c => c.id === activeCategory) || nearbyCategories[0];
   const vendorList = nearbyServicesData[activeCategory] || [];
-  const coords = campusCoordinates[college] || campusCoordinates['UC Berkeley'] || { lat: 37.8719, lng: -122.2585 };
-
-  // Map lifecycle: Only runs when isMapView is true
-  useEffect(() => {
-    if (!isMapView || !mapRef.current) return;
-
-    if (leafletInstance.current) {
-      leafletInstance.current.remove();
-      leafletInstance.current = null;
-    }
-
-    const map = L.map(mapRef.current, {
-      center: [coords.lat, coords.lng],
-      zoom: 15,
-      zoomControl: true,
-      attributionControl: false
-    });
-
-    leafletInstance.current = map;
-
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
-      maxZoom: 19
-    }).addTo(map);
-
-    // College reference anchor marker
-    const collegeIcon = L.divIcon({
-      className: 'custom-college-icon',
-      html: `
-        <div style="background: #2563eb; color: #fff; width: 38px; height: 38px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 18px; border: 3px solid #fff; box-shadow: 0 4px 14px rgba(37,99,235,0.4);">
-          🎓
-        </div>
-      `,
-      iconSize: [38, 38],
-      iconAnchor: [19, 19]
-    });
-
-    L.marker([coords.lat, coords.lng], { icon: collegeIcon })
-      .addTo(map)
-      .bindPopup(`<strong>🎓 ${college}</strong><br><span style="font-size: 12px; color: #64748b;">Central Reference Point</span>`);
-
-    // Category pins
-    const categoryColors = {
-      food: '#ea580c',
-      grocery: '#059669',
-      pharmacy: '#e11d48',
-      stationery: '#4f46e5',
-      atm: '#0284c7',
-      laundry: '#7c3aed',
-      transport: '#0d9488'
-    };
-    const catColor = categoryColors[activeCategory] || '#2563eb';
-    const allCoords = [[coords.lat, coords.lng]];
-
-    vendorList.forEach(item => {
-      const markerLat = coords.lat + (item.offset ? item.offset.lat : 0.001);
-      const markerLng = coords.lng + (item.offset ? item.offset.lng : 0.001);
-      allCoords.push([markerLat, markerLng]);
-
-      const pinIcon = L.divIcon({
-        className: 'custom-service-pin',
-        html: `
-          <div style="background: ${catColor}; color: #fff; width: 34px; height: 34px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 15px; border: 2.5px solid #fff; box-shadow: 0 3px 10px rgba(0,0,0,0.25); cursor: pointer;">
-            ${currentCatObj.icon}
-          </div>
-        `,
-        iconSize: [34, 34],
-        iconAnchor: [17, 17]
-      });
-
-      const marker = L.marker([markerLat, markerLng], { icon: pinIcon }).addTo(map);
-
-      marker.bindPopup(`
-        <div style="font-family: inherit; font-size: 13px; min-width: 170px;">
-          <strong style="color: #0f172a;">${item.name}</strong><br>
-          <div style="margin-top: 4px; display: flex; align-items: center; justify-content: space-between; font-size: 12px;">
-            <span style="color: #2563eb; font-weight: 700;">${item.dist}</span>
-            <span style="color: #16a34a; font-weight: 600;">${item.status}</span>
-          </div>
-          <div style="margin-top: 4px; font-size: 11px; color: #64748b;">${item.address}</div>
-        </div>
-      `);
-    });
-
-    if (allCoords.length > 1) {
-      map.fitBounds(L.latLngBounds(allCoords), { padding: [50, 50] });
-    }
-
-    return () => {
-      if (leafletInstance.current) {
-        leafletInstance.current.remove();
-        leafletInstance.current = null;
-      }
-    };
-  }, [isMapView, activeCategory, college, coords.lat, coords.lng, vendorList, currentCatObj.icon]);
 
   const handleCategorySelect = (catId) => {
     setActiveCategory(catId);
@@ -255,7 +158,16 @@ export default function Nearby() {
                 {vendorList.length} spots plotted
               </span>
             </div>
-            <div ref={mapRef} style={{ width: '100%', height: '360px' }}></div>
+            <PlutoMap
+              college={college}
+              items={vendorList.map(v => ({
+                ...v,
+                category: activeCategory,
+                icon: currentCatObj.icon
+              }))}
+              type="nearby"
+              height="360px"
+            />
           </section>
         )}
 

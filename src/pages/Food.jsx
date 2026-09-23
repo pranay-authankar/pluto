@@ -1,18 +1,14 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import L from 'leaflet';
 import { useRelocation } from '../context/RelocationContext';
-import { foodData, campusCoordinates } from '../data/mockData';
+import { foodData } from '../data/mockData';
+import PlutoMap from '../components/PlutoMap';
 
 export default function Food() {
   const { college } = useRelocation();
   const navigate = useNavigate();
   const [activeFilter, setActiveFilter] = useState('all');
   const [showMap, setShowMap] = useState(false);
-
-  const mapRef = useRef(null);
-  const leafletInstance = useRef(null);
-  const markersRef = useRef([]);
 
   const filteredFoods = foodData.filter(item => {
     if (activeFilter === 'veg') return item.veg === true;
@@ -22,85 +18,6 @@ export default function Food() {
     if (activeFilter === 'restaurant') return item.type.toLowerCase().includes('restaurant');
     return true;
   });
-
-  // Initialize and update Map only when optional map is open
-  useEffect(() => {
-    if (!showMap || !mapRef.current) return;
-
-    if (leafletInstance.current) {
-      leafletInstance.current.remove();
-      leafletInstance.current = null;
-    }
-
-    const baseCoords = campusCoordinates[college] || { lat: 37.8719, lng: -122.2585 };
-
-    const map = L.map(mapRef.current, {
-      center: [baseCoords.lat, baseCoords.lng],
-      zoom: 15,
-      zoomControl: true,
-      attributionControl: false
-    });
-
-    leafletInstance.current = map;
-
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
-      maxZoom: 19
-    }).addTo(map);
-
-    // College anchor pin
-    const collegeIcon = L.divIcon({
-      className: 'custom-college-icon',
-      html: `
-        <div style="background: #2563eb; color: #fff; width: 34px; height: 34px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 15px; border: 3px solid #fff; box-shadow: 0 4px 12px rgba(37,99,235,0.4);">
-          🎓
-        </div>
-      `,
-      iconSize: [34, 34],
-      iconAnchor: [17, 17]
-    });
-
-    L.marker([baseCoords.lat, baseCoords.lng], { icon: collegeIcon })
-      .addTo(map)
-      .bindPopup(`<b>${college}</b><br><span style="font-size:12px;color:#64748b;">Campus Reference</span>`);
-
-    // Food Markers
-    filteredFoods.forEach(food => {
-      const foodCoords = [
-        baseCoords.lat + (food.offset ? food.offset.lat : 0.001),
-        baseCoords.lng + (food.offset ? food.offset.lng : 0.001)
-      ];
-
-      const foodIcon = L.divIcon({
-        className: 'custom-food-icon',
-        html: `
-          <div style="background: #ea580c; color: #fff; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; border: 2.5px solid #fff; box-shadow: 0 3px 8px rgba(234,88,12,0.35); cursor: pointer;">
-            🍱
-          </div>
-        `,
-        iconSize: [30, 30],
-        iconAnchor: [15, 15]
-      });
-
-      const marker = L.marker(foodCoords, { icon: foodIcon }).addTo(map);
-      marker.bindPopup(`
-        <div style="font-family: inherit; font-size: 13px;">
-          <strong>${food.name}</strong><br>
-          <span style="color: #ea580c; font-weight: 700;">${food.startPrice}</span> • ${food.distance}
-        </div>
-      `);
-      marker.on('click', () => {
-        navigate(`/food/${food.id}`);
-      });
-      markersRef.current.push(marker);
-    });
-
-    return () => {
-      if (leafletInstance.current) {
-        leafletInstance.current.remove();
-        leafletInstance.current = null;
-      }
-    };
-  }, [showMap, filteredFoods, college, navigate]);
 
   return (
     <main className="main-content">
@@ -165,6 +82,9 @@ export default function Food() {
                 <span style={{ fontWeight: 700, fontSize: 'var(--font-size-sm)', color: 'var(--slate-800)' }}>
                   Food Locations around {college}
                 </span>
+                <span className="badge badge-secondary" style={{ fontSize: '11px', padding: '2px 6px' }}>
+                  {filteredFoods.length} meal spots plotted
+                </span>
               </div>
               <button
                 type="button"
@@ -175,9 +95,12 @@ export default function Food() {
                 ✕ Close Map
               </button>
             </div>
-            <div style={{ height: '360px', width: '100%' }}>
-              <div ref={mapRef} style={{ width: '100%', height: '100%' }} role="region" aria-label="Campus Food Map"></div>
-            </div>
+            <PlutoMap
+              college={college}
+              items={filteredFoods}
+              type="food"
+              height="380px"
+            />
           </div>
         )}
 

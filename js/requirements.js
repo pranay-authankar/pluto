@@ -66,6 +66,89 @@
 
   const requirementsForm = document.getElementById('requirementsForm');
 
+  const campusCoordinates = {
+    'IIT Bombay': { lat: 19.1334, lng: 72.9133 },
+    'IIT Delhi': { lat: 28.5450, lng: 77.1926 },
+    'BITS Pilani': { lat: 28.3639, lng: 75.5870 },
+    'IIT Madras': { lat: 12.9915, lng: 80.2337 },
+    'Delhi University (DU)': { lat: 28.6892, lng: 77.2104 },
+    'VIT Vellore': { lat: 12.9692, lng: 79.1559 },
+    'UC Berkeley': { lat: 37.8719, lng: -122.2585 }
+  };
+
+  let mapInstance = null;
+  let collegeMarker = null;
+  let radiusCircle = null;
+
+  function initMap() {
+    if (!window.L) return;
+    const mapEl = document.getElementById('requirementsMap');
+    if (!mapEl) return;
+
+    const coords = campusCoordinates[state.college] || campusCoordinates['IIT Bombay'] || { lat: 19.1334, lng: 72.9133 };
+
+    if (mapInstance) {
+      mapInstance.remove();
+      mapInstance = null;
+    }
+
+    mapInstance = L.map('requirementsMap', {
+      center: [coords.lat, coords.lng],
+      zoom: 14,
+      zoomControl: false,
+      attributionControl: true
+    });
+
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19,
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap</a> contributors'
+    }).addTo(mapInstance);
+
+    const collegeIcon = L.divIcon({
+      className: 'custom-college-icon',
+      html: `
+        <div style="background: #4f46e5; color: #fff; width: 34px; height: 34px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; border: 2.5px solid #fff; box-shadow: 0 4px 12px rgba(79,70,229,0.4);">
+          🎓
+        </div>
+      `,
+      iconSize: [34, 34],
+      iconAnchor: [17, 17]
+    });
+
+    collegeMarker = L.marker([coords.lat, coords.lng], { icon: collegeIcon })
+      .addTo(mapInstance)
+      .bindPopup(`<strong>🎓 ${state.college}</strong>`);
+
+    updateMapRadius();
+  }
+
+  function updateMapRadius() {
+    if (!mapInstance || !window.L) return;
+    const coords = campusCoordinates[state.college] || campusCoordinates['IIT Bombay'] || { lat: 19.1334, lng: 72.9133 };
+
+    if (collegeMarker) {
+      collegeMarker.setLatLng([coords.lat, coords.lng]);
+      collegeMarker.setPopupContent(`<strong>🎓 ${state.college}</strong>`);
+    }
+
+    if (radiusCircle) {
+      mapInstance.removeLayer(radiusCircle);
+      radiusCircle = null;
+    }
+
+    const radiusMeters = state.isDistAny ? 4000 : state.maxDist * 1000;
+    radiusCircle = L.circle([coords.lat, coords.lng], {
+      color: '#4f46e5',
+      fillColor: '#4f46e5',
+      fillOpacity: 0.12,
+      dashArray: '5, 8',
+      weight: 2,
+      radius: radiusMeters
+    }).addTo(mapInstance);
+
+    mapInstance.fitBounds(radiusCircle.getBounds(), { padding: [15, 15] });
+  }
+
   function init() {
     updateCollegeUI();
     setupCollegeControls();
@@ -73,6 +156,7 @@
     setupDistanceControls();
     setupChoiceCards();
     updateSummaryChips();
+    initMap();
 
     if (requirementsForm) {
       requirementsForm.addEventListener('submit', (e) => {
@@ -87,6 +171,7 @@
     if (previewCampusName) previewCampusName.textContent = state.college;
     if (chipCollege) chipCollege.textContent = `📍 ${state.college}`;
     if (collegeInput) collegeInput.value = state.college;
+    updateMapRadius();
   }
 
   function setupCollegeControls() {
@@ -183,6 +268,7 @@
         distPillDisplay.textContent = `Within ${state.maxDist.toFixed(1)} km`;
         updateDistSliderTrack();
         updateSummaryChips();
+        updateMapRadius();
       });
       updateDistSliderTrack();
     }
@@ -207,6 +293,7 @@
         }
         updateDistSliderTrack();
         updateSummaryChips();
+        updateMapRadius();
       });
     }
   }

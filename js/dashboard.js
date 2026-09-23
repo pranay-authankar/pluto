@@ -304,11 +304,12 @@
       center: [coords.lat, coords.lng],
       zoom: 15,
       zoomControl: true,
-      attributionControl: false
+      attributionControl: true
     });
 
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
-      maxZoom: 19
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19,
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap</a> contributors'
     }).addTo(mapInstance);
 
     const collegeIcon = L.divIcon({

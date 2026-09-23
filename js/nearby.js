@@ -137,13 +137,13 @@
       center: [coords.lat, coords.lng],
       zoom: 15,
       zoomControl: true,
-      attributionControl: false
+      attributionControl: true
     });
 
-    // Sleek CartoDB Positron tiles
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+    // Real OpenStreetMap Tile Layer
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
       maxZoom: 19,
-      subdomains: 'abcd'
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap</a> contributors'
     }).addTo(mapInstance);
 
     // Subtle 800m student walking radius perimeter

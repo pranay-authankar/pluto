@@ -1,10 +1,13 @@
 import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useRelocation } from '../context/RelocationContext';
+import { useAuth } from '../context/AuthContext';
 
 export default function Navbar() {
   const { college, showToast } = useRelocation();
+  const { user, studentName, logout, openAuthModal } = useAuth();
   const location = useLocation();
+  const navigate = useNavigate();
 
   const isCollegeSelected = Boolean(college && college.trim());
   const isActive = (path) => location.pathname === path;
@@ -20,6 +23,14 @@ export default function Navbar() {
         );
       }
     }
+  };
+
+  const handleLogout = async () => {
+    const res = await logout();
+    if (res.success && showToast) {
+      showToast('Signed Out', 'You have been successfully logged out.', 'primary');
+    }
+    navigate('/login', { replace: true });
   };
 
   return (
@@ -41,7 +52,7 @@ export default function Navbar() {
         </Link>
 
         {/* Global Navbar Items */}
-        <nav className="header-actions">
+        <nav className="header-actions" style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
 
           {/* Nearby → /nearby */}
           <Link
@@ -79,9 +90,66 @@ export default function Navbar() {
               <span>Select College</span>
             </Link>
           )}
+
+          {/* Firebase Authentication: Logged-in User Email & Logout / Log In Button */}
+          {user ? (
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', marginLeft: '0.25rem' }}>
+              <div
+                className="badge"
+                style={{
+                  padding: '0.35rem 0.75rem',
+                  gap: '6px',
+                  background: 'var(--primary-50, #eef2ff)',
+                  color: 'var(--primary-700, #4338ca)',
+                  border: '1px solid var(--primary-200, #c7d2fe)',
+                  maxWidth: '190px',
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis',
+                  whiteSpace: 'nowrap'
+                }}
+                title={`Logged in as ${studentName ? `${studentName} (${user.email})` : user.email}`}
+              >
+                <span>👤</span>
+                <span style={{ overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                  {studentName || user.email}
+                </span>
+              </div>
+              <button
+                type="button"
+                onClick={handleLogout}
+                className="btn btn-secondary"
+                style={{
+                  padding: '0.32rem 0.65rem',
+                  fontSize: '0.785rem',
+                  borderRadius: '6px',
+                  cursor: 'pointer'
+                }}
+                title="Log out of your account"
+              >
+                Log Out
+              </button>
+            </div>
+          ) : (
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', marginLeft: '0.25rem' }}>
+              <button
+                type="button"
+                onClick={() => openAuthModal('login')}
+                className="btn btn-primary"
+                style={{
+                  padding: '0.35rem 0.85rem',
+                  fontSize: '0.825rem',
+                  borderRadius: '8px',
+                  cursor: 'pointer'
+                }}
+              >
+                Sign In
+              </button>
+            </div>
+          )}
         </nav>
 
       </div>
     </header>
   );
 }
+

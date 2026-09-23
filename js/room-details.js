@@ -158,15 +158,15 @@
     if (!mapEl) return;
 
     mapInstance = L.map('roomLocationMap', {
-      zoomControl: false,
-      attributionControl: false,
+      zoomControl: true,
+      attributionControl: true,
       scrollWheelZoom: false
     });
 
-    // Sleek CartoDB Light Tiles
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+    // Real OpenStreetMap Tile Layer
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
       maxZoom: 19,
-      subdomains: 'abcd'
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap</a> contributors'
     }).addTo(mapInstance);
 
     // 1. College Beacon Marker

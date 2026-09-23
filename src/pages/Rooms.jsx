@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useRelocation } from '../context/RelocationContext';
 import { roomsData } from '../data/mockData';
 import { maskPhoneNumber } from '../utils/phoneUtils';
+import PlutoMap from '../components/PlutoMap';
 
 export default function Rooms() {
   const { college } = useRelocation();
@@ -13,6 +14,7 @@ export default function Rooms() {
   const [maxBudget, setMaxBudget] = useState(15000); // 15000 represents Any / Max
   const [filterDistance, setFilterDistance] = useState('all');
   const [filterAmenity, setFilterAmenity] = useState('all');
+  const [showMap, setShowMap] = useState(false);
 
   const isFiltered = filterType !== 'all' || maxBudget < 15000 || filterDistance !== 'all' || filterAmenity !== 'all';
 
@@ -100,6 +102,55 @@ export default function Rooms() {
           </div>
         </section>
 
+        {/* Optional Collapsible Map View */}
+        {showMap && (
+          <div
+            style={{
+              marginBottom: 'var(--space-6)',
+              background: 'var(--color-white)',
+              borderRadius: 'var(--radius-2xl)',
+              border: '1px solid var(--slate-200)',
+              overflow: 'hidden',
+              boxShadow: 'var(--shadow-md)'
+            }}
+          >
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                padding: 'var(--space-3) var(--space-4)',
+                background: 'var(--slate-50)',
+                borderBottom: '1px solid var(--slate-200)'
+              }}
+            >
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <span style={{ fontSize: '1.1rem' }}>🗺️</span>
+                <span style={{ fontWeight: 700, fontSize: 'var(--font-size-sm)', color: 'var(--slate-800)' }}>
+                  Student Stays around {college}
+                </span>
+                <span className="badge badge-secondary" style={{ fontSize: '11px', padding: '2px 6px' }}>
+                  {filteredRooms.length} stays plotted
+                </span>
+              </div>
+              <button
+                type="button"
+                className="btn btn-ghost btn-sm"
+                onClick={() => setShowMap(false)}
+                style={{ padding: '2px 8px', fontSize: 'var(--font-size-xs)' }}
+              >
+                ✕ Close Map
+              </button>
+            </div>
+            <PlutoMap
+              college={college}
+              items={filteredRooms}
+              type="rooms"
+              height="380px"
+            />
+          </div>
+        )}
+
         {/* Enhanced Multi-Category Filter Bar */}
         <div className="rooms-filter-container">
           <div className="rooms-filter-header">
@@ -111,6 +162,28 @@ export default function Rooms() {
             </div>
 
             <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+              <button
+                type="button"
+                className={`btn ${showMap ? 'btn-primary' : 'btn-secondary'} btn-sm`}
+                onClick={() => setShowMap(!showMap)}
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '6px',
+                  fontWeight: 700,
+                  borderRadius: 'var(--radius-full)',
+                  padding: '0.35rem 0.85rem'
+                }}
+                aria-label={showMap ? 'Hide Map' : 'View on Map'}
+              >
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
+                  <polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon>
+                  <line x1="8" y1="2" x2="8" y2="18"></line>
+                  <line x1="16" y1="6" x2="16" y2="22"></line>
+                </svg>
+                <span>{showMap ? 'Hide Map' : 'View on Map'}</span>
+              </button>
+
               <span style={{ fontSize: 'var(--font-size-xs)', color: 'var(--slate-500)' }}>
                 Showing <strong>{filteredRooms.length}</strong> of {roomsData.length} stays
               </span>

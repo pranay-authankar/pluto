@@ -1,9 +1,13 @@
 import React from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Outlet } from 'react-router-dom';
 import { RelocationProvider } from './context/RelocationContext';
+import { AuthProvider } from './context/AuthContext';
 import Navbar from './components/Navbar';
+import ProtectedRoute from './components/ProtectedRoute';
+import AskPlutoChat from './components/AskPlutoChat';
 
 // Pages
+import Auth from './pages/Auth';
 import Home from './pages/Home';
 import Requirements from './pages/Requirements';
 import Recommendations from './pages/Recommendations';
@@ -16,38 +20,56 @@ import PartnerDetails from './pages/PartnerDetails';
 import Nearby from './pages/Nearby';
 import NotFound from './pages/NotFound';
 
+// Layout wrapper for all protected Pluto pages
+function ProtectedLayout() {
+  return (
+    <ProtectedRoute>
+      <div className="app-shell">
+        <Navbar />
+        <Outlet />
+        <AskPlutoChat />
+      </div>
+    </ProtectedRoute>
+  );
+}
+
 export default function App() {
   return (
-    <RelocationProvider>
-      <BrowserRouter>
-        <div className="app-shell">
-          <Navbar />
+    <AuthProvider>
+      <RelocationProvider>
+        <BrowserRouter>
           <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/requirements" element={<Requirements />} />
-            <Route path="/recommendations" element={<Recommendations />} />
-            
-            {/* Rooms Flow */}
-            <Route path="/rooms" element={<Rooms />} />
-            <Route path="/rooms/:roomId" element={<RoomDetails />} />
+            {/* Public Authentication Landing Page */}
+            <Route path="/login" element={<Auth />} />
 
-            {/* Food Flow */}
-            <Route path="/food" element={<Food />} />
-            <Route path="/food/:foodId" element={<FoodDetails />} />
+            {/* Protected Pluto Application Routes */}
+            <Route element={<ProtectedLayout />}>
+              <Route path="/" element={<Home />} />
+              <Route path="/requirements" element={<Requirements />} />
+              <Route path="/recommendations" element={<Recommendations />} />
+              
+              {/* Rooms Flow */}
+              <Route path="/rooms" element={<Rooms />} />
+              <Route path="/rooms/:roomId" element={<RoomDetails />} />
 
-            {/* Roommates Flow */}
-            <Route path="/roommates" element={<Roommates />} />
-            <Route path="/roommates/:partnerId" element={<PartnerDetails />} />
+              {/* Food Flow */}
+              <Route path="/food" element={<Food />} />
+              <Route path="/food/:foodId" element={<FoodDetails />} />
 
-            {/* Nearby Explorer Flow */}
-            <Route path="/nearby" element={<Nearby />} />
-            <Route path="/nearby/:category" element={<Nearby />} />
+              {/* Roommates Flow */}
+              <Route path="/roommates" element={<Roommates />} />
+              <Route path="/roommates/:partnerId" element={<PartnerDetails />} />
 
-            {/* 404 Catch-All */}
-            <Route path="*" element={<NotFound />} />
+              {/* Nearby Explorer Flow */}
+              <Route path="/nearby" element={<Nearby />} />
+              <Route path="/nearby/:category" element={<Nearby />} />
+
+              {/* 404 Catch-All */}
+              <Route path="*" element={<NotFound />} />
+            </Route>
           </Routes>
-        </div>
-      </BrowserRouter>
-    </RelocationProvider>
+        </BrowserRouter>
+      </RelocationProvider>
+    </AuthProvider>
   );
 }

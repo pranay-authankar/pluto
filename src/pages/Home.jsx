@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRelocation } from '../context/RelocationContext';
+import { useAuth } from '../context/AuthContext';
 import { indianColleges } from '../data/mockData';
 
 const POPULAR_INDIAN_COLLEGES = [
@@ -33,6 +34,7 @@ const COLLEGE_LOCATIONS = {
 
 export default function Home() {
   const { college, setCollege, showToast } = useRelocation();
+  const { studentName, user } = useAuth();
   const [searchInput, setSearchInput] = useState('');
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isChangingCollege, setIsChangingCollege] = useState(false);
@@ -145,6 +147,28 @@ export default function Home() {
            ========================================================================= */}
         <section className="college-first-hero">
           
+          {/* Welcome Student Greeting */}
+          <div
+            className="student-welcome-badge"
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '0.5rem',
+              padding: '0.45rem 1rem',
+              borderRadius: '9999px',
+              background: 'var(--primary-50, #eef2ff)',
+              border: '1px solid var(--primary-200, #c7d2fe)',
+              color: 'var(--primary-700, #4338ca)',
+              fontSize: '0.925rem',
+              fontWeight: 700,
+              marginBottom: '1rem',
+              boxShadow: '0 2px 6px rgba(79, 70, 229, 0.08)'
+            }}
+          >
+            <span>👋</span>
+            <span>{studentName === 'Hey there' ? 'Hey there' : `Welcome, ${studentName || (user?.email ? user.email.split('@')[0] : 'Student')}`}</span>
+          </div>
+
           {/* Status Badge */}
           <div className="campus-context-pill">
             <span className={`pulse-indicator ${isCollegeSelected ? 'pulse-active' : 'pulse-inactive'}`}></span>

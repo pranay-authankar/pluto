@@ -12,6 +12,9 @@
   <link rel="stylesheet" href="css/components.css">
   <link rel="stylesheet" href="css/layout.css">
   <link rel="stylesheet" href="css/requirements.css">
+
+  <!-- Leaflet Map CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="" />
 </head>
 <body class="app-shell">
 
@@ -308,9 +311,8 @@
             <span class="badge badge-success"><span class="badge-dot"></span> Ready</span>
           </div>
 
-          <div class="preview-map-box">
-            <div class="preview-radar-circle" id="previewRadar" data-radius="3" style="width: 120px; height: 120px;"></div>
-            <div class="preview-college-pin">🎓</div>
+          <div style="height: 220px; width: 100%; border-radius: var(--radius-xl); overflow: hidden; border: 1px solid var(--slate-200); position: relative;">
+            <div id="requirementsMap" style="width: 100%; height: 100%;" role="region" aria-label="Campus Search Radius Map"></div>
           </div>
 
           <div style="text-align: center;">
@@ -340,6 +342,7 @@
     </div>
   </main>
 
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
   <script src="js/requirements.js"></script>
 </body>
 </html>

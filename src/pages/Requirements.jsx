@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+import L from 'leaflet';
 import { useRelocation } from '../context/RelocationContext';
-import { indianColleges } from '../data/mockData';
+import { indianColleges, campusCoordinates } from '../data/mockData';
 
 export default function Requirements() {
   const { college, setCollege, requirements, updateRequirements, showToast } = useRelocation();
@@ -47,6 +48,69 @@ export default function Requirements() {
       setIsEditingCollege(false);
     }
   }, [college, activeCollege]);
+
+  const mapRef = useRef(null);
+  const leafletInstance = useRef(null);
+
+  const coords = (activeCollege && campusCoordinates[activeCollege])
+    ? campusCoordinates[activeCollege]
+    : campusCoordinates['IIT Bombay'] || { lat: 19.1334, lng: 72.9133 };
+
+  useEffect(() => {
+    if (!mapRef.current) return;
+    if (leafletInstance.current) {
+      leafletInstance.current.remove();
+      leafletInstance.current = null;
+    }
+
+    const map = L.map(mapRef.current, {
+      center: [coords.lat, coords.lng],
+      zoom: isDistanceAny ? 13 : maxDistance <= 1 ? 15 : maxDistance <= 3 ? 14 : 13,
+      zoomControl: false,
+      attributionControl: true
+    });
+
+    leafletInstance.current = map;
+
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19,
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap</a> contributors'
+    }).addTo(map);
+
+    const collegeIcon = L.divIcon({
+      className: 'custom-college-icon',
+      html: `
+        <div style="background: #4f46e5; color: #fff; width: 34px; height: 34px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; border: 2.5px solid #fff; box-shadow: 0 4px 12px rgba(79,70,229,0.4);">
+          🎓
+        </div>
+      `,
+      iconSize: [34, 34],
+      iconAnchor: [17, 17]
+    });
+
+    L.marker([coords.lat, coords.lng], { icon: collegeIcon })
+      .addTo(map)
+      .bindPopup(`<strong>🎓 ${activeCollege || 'Campus Center'}</strong>`);
+
+    const radiusMeters = isDistanceAny ? 4000 : maxDistance * 1000;
+    const circle = L.circle([coords.lat, coords.lng], {
+      color: '#4f46e5',
+      fillColor: '#4f46e5',
+      fillOpacity: 0.12,
+      dashArray: '5, 8',
+      weight: 2,
+      radius: radiusMeters
+    }).addTo(map);
+
+    map.fitBounds(circle.getBounds(), { padding: [15, 15] });
+
+    return () => {
+      if (leafletInstance.current) {
+        leafletInstance.current.remove();
+        leafletInstance.current = null;
+      }
+    };
+  }, [activeCollege, maxDistance, isDistanceAny, coords.lat, coords.lng]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -487,16 +551,8 @@ export default function Requirements() {
               <span className="badge badge-success"><span className="badge-dot"></span> Ready</span>
             </div>
 
-            <div className="preview-map-box">
-              <div
-                className="preview-radar-circle"
-                data-radius={isDistanceAny ? '5' : maxDistance <= 1 ? '1' : maxDistance <= 3 ? '3' : '5'}
-                style={{
-                  width: isDistanceAny ? '200px' : `${Math.min(200, Math.max(60, maxDistance * 20))}px`,
-                  height: isDistanceAny ? '200px' : `${Math.min(200, Math.max(60, maxDistance * 20))}px`
-                }}
-              ></div>
-              <div className="preview-college-pin">🎓</div>
+            <div style={{ height: '220px', width: '100%', borderRadius: 'var(--radius-xl)', overflow: 'hidden', border: '1px solid var(--slate-200)', position: 'relative' }}>
+              <div ref={mapRef} style={{ width: '100%', height: '100%' }} role="region" aria-label="Campus Search Radius Map"></div>
             </div>
 
             <div style={{ textAlign: 'center' }}>
