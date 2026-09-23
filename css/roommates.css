@@ -1,0 +1,654 @@
+/**
+ * STUDENT RELOCATION PLATFORM - ROOM PARTNER FINDER STYLES
+ * Clean, minimal student profile cards, compatibility gauge, preference pills, and compact modal
+ */
+
+/* ==========================================================================
+   Page Shell & Header
+   ========================================================================== */
+.roommates-page-shell {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: var(--space-4) var(--space-6) var(--space-16);
+}
+
+.roommates-header {
+  margin-bottom: var(--space-6);
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+}
+
+.roommates-title-group {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.roommates-title {
+  font-size: clamp(1.65rem, 3vw, 2.25rem);
+  font-weight: var(--font-weight-extrabold);
+  letter-spacing: -0.03em;
+  color: var(--slate-900);
+}
+
+.roommates-subtitle {
+  font-size: var(--font-size-sm);
+  color: var(--slate-500);
+}
+
+/* ==========================================================================
+   Filter Bar (Budget · Gender · College · Compatibility)
+   ========================================================================== */
+.roommates-filter-bar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+  background: var(--color-white);
+  border: 1.5px solid var(--slate-200);
+  border-radius: var(--radius-2xl);
+  padding: var(--space-4) var(--space-5);
+  box-shadow: var(--shadow-xs);
+  margin-bottom: var(--space-6);
+}
+
+.filter-group-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.filter-label-tiny {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-extrabold);
+  color: var(--slate-600);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.filter-select {
+  appearance: none;
+  -webkit-appearance: none;
+  background: var(--slate-50);
+  border: 1.5px solid var(--slate-200);
+  border-radius: var(--radius-xl);
+  padding: 0.5rem 2rem 0.5rem 0.85rem;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  color: var(--slate-800);
+  cursor: pointer;
+  outline: none;
+  transition: all var(--transition-fast);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23475569' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+}
+
+.filter-select:hover, .filter-select:focus {
+  border-color: var(--primary-500);
+  background-color: var(--color-white);
+  color: var(--primary-800);
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+}
+
+/* ==========================================================================
+   Profile Cards Grid
+   ========================================================================== */
+.roommates-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: var(--space-5);
+}
+
+/* ==========================================================================
+   Clean Profile Card (Name · College · Budget · Distance)
+   ========================================================================== */
+.partner-card {
+  background: var(--color-white);
+  border: 1.5px solid var(--slate-200);
+  border-radius: var(--radius-2xl);
+  padding: var(--space-5);
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  transition: all var(--transition-base);
+  position: relative;
+  overflow: hidden;
+}
+
+.partner-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--primary-300);
+  box-shadow: var(--shadow-hover);
+}
+
+/* Card Header: Avatar, Name, College & Compatibility Gauge */
+.partner-card-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.partner-identity {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.partner-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: var(--font-weight-extrabold);
+  font-size: 1rem;
+  color: white;
+  flex-shrink: 0;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+  position: relative;
+}
+
+.partner-avatar-dot {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: var(--success-500);
+  border: 2px solid white;
+}
+
+.partner-name {
+  font-size: 1.15rem;
+  font-weight: var(--font-weight-extrabold);
+  color: var(--slate-900);
+  line-height: 1.2;
+}
+
+.partner-college {
+  font-size: var(--font-size-xs);
+  color: var(--slate-500);
+  margin-top: 2px;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+
+/* Compatibility % Gauge Pill */
+.compat-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: 0.3rem 0.75rem;
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-extrabold);
+  white-space: nowrap;
+}
+
+.compat-high {
+  background: var(--success-50);
+  color: var(--success-700);
+  border: 1px solid var(--success-100);
+}
+
+.compat-med {
+  background: var(--primary-50);
+  color: var(--primary-700);
+  border: 1px solid var(--primary-100);
+}
+
+/* ==========================================================================
+   Preferences / Attribute Tags (Small & Highlighted with Clear Separation)
+   ========================================================================== */
+.partner-tags-row, .pref-tags-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+  margin: 4px 0;
+}
+
+.partner-tag, .pref-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 9px;
+  border-radius: var(--radius-full);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  background: var(--slate-100);
+  color: var(--slate-700);
+  border: 1px solid var(--slate-200);
+  white-space: nowrap;
+  line-height: 1.35;
+  transition: all var(--transition-fast);
+}
+
+.partner-tag:hover, .pref-tag:hover {
+  background: var(--slate-200);
+}
+
+/* Distinct Highlighted Variants */
+.tag-veg {
+  background: #ecfdf5 !important;
+  color: #065f46 !important;
+  border-color: #a7f3d0 !important;
+}
+
+.tag-nonveg {
+  background: #fef2f2 !important;
+  color: #991b1b !important;
+  border-color: #fecaca !important;
+}
+
+.tag-quiet {
+  background: #f5f3ff !important;
+  color: #5b21b6 !important;
+  border-color: #ddd6fe !important;
+}
+
+.tag-early {
+  background: #fffbeb !important;
+  color: #92400e !important;
+  border-color: #fde68a !important;
+}
+
+.tag-shared {
+  background: #eff6ff !important;
+  color: #1e40af !important;
+  border-color: #bfdbfe !important;
+}
+
+.tag-night {
+  background: #f8fafc !important;
+  color: #1e293b !important;
+  border-color: #cbd5e1 !important;
+}
+
+.tag-amenity {
+  background: #f0fdf4 !important;
+  color: #166534 !important;
+  border-color: #bbf7d0 !important;
+}
+
+/* Card Bottom Metrics (Budget · Distance) */
+.partner-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--slate-100);
+  margin-top: auto;
+}
+
+.partner-budget-box {
+  display: flex;
+  flex-direction: column;
+}
+
+.partner-budget-val {
+  font-size: 1.15rem;
+  font-weight: var(--font-weight-extrabold);
+  color: var(--primary-700);
+  line-height: 1;
+}
+
+.partner-distance {
+  font-size: var(--font-size-xs);
+  color: var(--slate-500);
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  margin-top: 3px;
+}
+
+/* Clear Action: "View" Button */
+.btn-partner-view {
+  padding: 0.55rem 1.25rem;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  background: var(--primary-600);
+  color: var(--color-white);
+  border: none;
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1-5);
+}
+
+.btn-partner-view:hover {
+  background: var(--primary-700);
+  box-shadow: 0 4px 12px var(--primary-glow);
+  transform: translateY(-1px);
+}
+
+/* ==========================================================================
+   Compact Detail View Modal (Name · College · Budget · Distance · Match)
+   ========================================================================== */
+.partner-modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(15, 23, 42, 0.45);
+  backdrop-filter: blur(4px);
+  z-index: var(--z-modal);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-4);
+  opacity: 0;
+  visibility: hidden;
+  transition: all var(--transition-fast);
+}
+
+.partner-modal-backdrop.open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.partner-modal-card {
+  background: var(--color-white);
+  border-radius: var(--radius-2xl);
+  max-width: 460px;
+  width: 100%;
+  box-shadow: var(--shadow-xl);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transform: scale(0.96);
+  transition: transform var(--transition-smooth);
+}
+
+.partner-modal-backdrop.open .partner-modal-card {
+  transform: scale(1);
+}
+
+.partner-modal-header {
+  padding: var(--space-6) var(--space-6) var(--space-4);
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--slate-100);
+}
+
+.partner-modal-body {
+  padding: var(--space-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.partner-modal-metrics {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-2);
+  padding: var(--space-4);
+  background: var(--slate-50);
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--slate-200);
+}
+
+.modal-metric-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-metric-label {
+  font-size: 0.65rem;
+  font-weight: var(--font-weight-bold);
+  color: var(--slate-400);
+  text-transform: uppercase;
+}
+
+.modal-metric-val {
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-extrabold);
+  color: var(--slate-800);
+  margin-top: 2px;
+}
+
+/* ==========================================================================
+   Two Choices on Landing Page (I Have a Room / I Need a Room)
+   ========================================================================== */
+.roommate-choices-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-4);
+  margin-bottom: var(--space-6);
+}
+
+.choice-selector-card {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-5) var(--space-6);
+  background: var(--color-white);
+  border: 2px solid var(--slate-200);
+  border-radius: var(--radius-2xl);
+  cursor: pointer;
+  text-align: left;
+  transition: all var(--transition-smooth);
+  position: relative;
+  box-shadow: var(--shadow-sm);
+}
+
+.choice-selector-card:hover {
+  border-color: var(--primary-400);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.choice-selector-card.selected {
+  border-color: var(--primary-600);
+  background: linear-gradient(180deg, #f8faff 0%, #eff6ff 100%);
+  box-shadow: 0 4px 20px rgba(37, 99, 235, 0.15);
+}
+
+.choice-icon-wrap {
+  width: 52px;
+  height: 52px;
+  border-radius: var(--radius-xl);
+  background: var(--slate-100);
+  border: 1px solid var(--slate-200);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.6rem;
+  flex-shrink: 0;
+  transition: all var(--transition-fast);
+}
+
+.choice-selector-card.selected .choice-icon-wrap {
+  background: var(--primary-600);
+  border-color: var(--primary-600);
+  box-shadow: 0 4px 12px var(--primary-glow);
+}
+
+.choice-content {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  flex: 1;
+}
+
+.choice-tag {
+  display: inline-block;
+  font-size: 0.65rem;
+  font-weight: var(--font-weight-extrabold);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--slate-400);
+}
+
+.choice-selector-card.selected .choice-tag {
+  color: var(--primary-600);
+}
+
+.choice-title {
+  font-size: 1.15rem;
+  font-weight: var(--font-weight-extrabold);
+  color: var(--slate-900);
+  letter-spacing: -0.01em;
+}
+
+.choice-selector-card.selected .choice-title {
+  color: var(--primary-900);
+}
+
+.choice-desc {
+  font-size: var(--font-size-xs);
+  color: var(--slate-500);
+  line-height: 1.4;
+}
+
+.choice-selector-card.selected .choice-desc {
+  color: var(--slate-600);
+}
+
+.choice-radio-indicator {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 2px solid var(--slate-300);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all var(--transition-fast);
+}
+
+.choice-selector-card.selected .choice-radio-indicator {
+  border-color: var(--primary-600);
+  background: var(--primary-600);
+}
+
+.choice-radio-indicator::after {
+  content: '';
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: white;
+  opacity: 0;
+  transform: scale(0.4);
+  transition: all var(--transition-fast);
+}
+
+.choice-selector-card.selected .choice-radio-indicator::after {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* ==========================================================================
+   Vacant Shared Room Cards
+   ========================================================================== */
+.vacant-room-card {
+  background: var(--color-white);
+  border: 1.5px solid var(--slate-200);
+  border-radius: var(--radius-2xl);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  transition: all var(--transition-base);
+  cursor: pointer;
+}
+
+.vacant-room-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--primary-300);
+  box-shadow: var(--shadow-hover);
+}
+
+.vacant-room-img-wrap {
+  position: relative;
+  width: 100%;
+  height: 190px;
+  overflow: hidden;
+  background: var(--slate-100);
+}
+
+.vacant-room-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--transition-smooth);
+}
+
+.vacant-room-card:hover .vacant-room-img {
+  transform: scale(1.05);
+}
+
+.vacant-room-body {
+  padding: var(--space-4) var(--space-5) var(--space-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2-5);
+  flex: 1;
+}
+
+.vacant-room-title {
+  font-size: 1.125rem;
+  font-weight: var(--font-weight-extrabold);
+  color: var(--slate-900);
+  line-height: 1.3;
+}
+
+.vacant-room-detail-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-2);
+  background: var(--slate-50);
+  padding: var(--space-3);
+  border-radius: var(--radius-lg);
+  font-size: var(--font-size-xs);
+}
+
+.vacant-room-detail-label {
+  color: var(--slate-400);
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  font-weight: var(--font-weight-bold);
+  letter-spacing: 0.04em;
+  display: block;
+}
+
+.vacant-room-detail-val {
+  font-weight: var(--font-weight-bold);
+  color: var(--slate-800);
+}
+
+/* ==========================================================================
+   Responsive Adaptations
+   ========================================================================== */
+@media (max-width: 768px) {
+  .roommates-filter-bar {
+    gap: var(--space-2);
+  }
+  .filter-group-item {
+    flex: 1 1 calc(50% - var(--space-2));
+  }
+  .filter-select {
+    width: 100%;
+  }
+  .roommates-grid {
+    grid-template-columns: 1fr;
+  }
+  .roommate-choices-container {
+    grid-template-columns: 1fr;
+  }
+}
+

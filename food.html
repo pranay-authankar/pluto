@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Food & Tiffin Services | Pluto</title>
+  <meta name="description" content="Explore verified student food, tiffin services, hostel mess, and campus eateries.">
+
+  <!-- Core Design System -->
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/food.css">
+
+  <!-- Leaflet Map CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="" />
+</head>
+<body class="app-shell">
+
+  <!-- ========================================================================
+       TOP NAVIGATION BAR
+       ======================================================================== -->
+  <header class="site-header">
+    <div class="container header-container">
+      
+      <!-- Brand Logo -->
+      <a href="index.html" class="brand" aria-label="Pluto Home">
+        <div class="brand-icon-wrapper">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
+            <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
+          </svg>
+        </div>
+        <div class="brand-text">
+          <span class="brand-title">Pluto</span>
+          <span class="brand-tag">Your World Away From Home.</span>
+        </div>
+      </a>
+
+      <!-- Quick Nav Links -->
+      <div class="header-actions">
+        <a href="index.html" class="nav-link">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="m15 18-6-6 6-6"/></svg>
+          Home
+        </a>
+        <a href="rooms.html" class="nav-link">
+          Rooms
+        </a>
+        <a href="roommates.html" class="nav-link">
+          Partners
+        </a>
+        <a href="nearby.html" class="nav-link">
+          Nearby
+        </a>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- ========================================================================
+       FOOD SERVICES MAIN VIEWPORT
+       Visual Cards + Compact Sticky Map View
+       ======================================================================== -->
+  <main class="main-content">
+    <div class="food-page-shell">
+
+      <!-- Header: Title & Filter Pill Bar -->
+      <section class="food-header">
+        <div class="food-title-group">
+          <h1 class="food-title">Food & Meal Plans</h1>
+          <span class="food-subtitle" id="foodCampusLabel">Near UC Berkeley</span>
+        </div>
+
+        <!-- Simple Filters: All · Veg · Non-Veg · Tiffin · Mess · Restaurant -->
+        <nav class="food-filter-bar" aria-label="Food Categories">
+          <button type="button" class="food-filter-btn active" data-filter="all">All</button>
+          <button type="button" class="food-filter-btn" data-filter="veg">🌱 Veg</button>
+          <button type="button" class="food-filter-btn" data-filter="non-veg">🍗 Non-Veg</button>
+          <button type="button" class="food-filter-btn" data-filter="tiffin">🍱 Tiffin</button>
+          <button type="button" class="food-filter-btn" data-filter="mess">🍲 Mess</button>
+          <button type="button" class="food-filter-btn" data-filter="restaurant">🍽️ Restaurant</button>
+        </nav>
+      </section>
+
+      <!-- Content Split: Visual Food Cards (Left) + Compact Sticky Map (Right) -->
+      <div class="food-content-grid">
+        
+        <!-- Left: Visual Food Cards -->
+        <section class="food-cards-list" id="foodCardsList" aria-label="Food Options List">
+          <!-- Rendered dynamically by js/food.js -->
+        </section>
+
+        <!-- Right: Compact Map View (College Highlighted) -->
+        <aside class="food-map-wrapper">
+          <div class="food-map-caption">
+            <span style="font-weight: 700; color: var(--slate-900);">Campus Dining Radar</span>
+            <span class="badge badge-success"><span class="badge-dot"></span> Verified</span>
+          </div>
+
+          <div class="food-map-container">
+            <div id="foodMap" role="region" aria-label="Food Locations Interactive Map"></div>
+          </div>
+
+          <div style="font-size: var(--font-size-xs); color: var(--slate-500); display: flex; align-items: center; justify-content: space-between;">
+            <span>🎓 College Anchor Pin</span>
+            <span>🍱 Food Locations</span>
+          </div>
+        </aside>
+
+      </div>
+
+    </div>
+  </main>
+
+  <!-- ========================================================================
+       COMPACT DETAIL VIEW MODAL
+       Strictly: Name · Price · Distance · Location
+       ======================================================================== -->
+  <div class="food-modal-backdrop" id="foodDetailModal" role="dialog" aria-modal="true" aria-labelledby="modalFoodName">
+    <div class="food-modal-card">
+      <img src="assets/food_tiffin.jpg" alt="Food Item" id="modalFoodImg" class="food-modal-header-img">
+
+      <div class="food-modal-body">
+        <div style="display: flex; align-items: baseline; justify-content: space-between;">
+          <h2 class="food-modal-title" id="modalFoodName">Annapurna Daily Tiffin</h2>
+          <span class="badge badge-primary" id="modalFoodType">Veg • Tiffin</span>
+        </div>
+
+        <!-- Metrics Row: Price · Distance · Location -->
+        <div class="food-modal-metrics">
+          <div class="food-metric-item">
+            <span class="food-metric-label">Price</span>
+            <span class="food-metric-value" id="modalFoodPrice" style="color: var(--primary-700);">₹2,800/mo</span>
+          </div>
+
+          <div class="food-metric-item">
+            <span class="food-metric-label">Distance</span>
+            <span class="food-metric-value" id="modalFoodDistance">0.3 km</span>
+          </div>
+
+          <div class="food-metric-item">
+            <span class="food-metric-label">Location</span>
+            <span class="food-metric-value" id="modalFoodLocation">Telegraph Ave</span>
+          </div>
+        </div>
+
+        <button type="button" class="btn btn-primary btn-md" style="width: 100%; margin-top: var(--space-2);" onclick="window.showToast({title: 'Meal Plan Selected', message: 'Connected to student dining coordinator.', type: 'success'}); closeFoodModal();">
+          <span>Subscribe Meal Plan</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Minimal Footer -->
+  <footer class="site-footer" style="padding: var(--space-6) 0;">
+    <div class="container footer-bottom" style="border-top: none; padding-top: 0; justify-content: center;">
+      <div style="font-size: var(--font-size-xs); color: var(--slate-500);">
+        &copy; 2026 Pluto • Student food and meal plans.
+      </div>
+    </div>
+  </footer>
+
+  <!-- Toast Notification Container Root -->
+  <div class="toast-container" id="toastContainer" aria-live="polite"></div>
+
+  <!-- Leaflet.js -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+  
+  <!-- Scripts -->
+  <script src="js/design-system.js"></script>
+  <script src="js/food.js"></script>
+</body>
+</html>

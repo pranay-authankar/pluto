@@ -1,0 +1,483 @@
+/**
+ * STUDENT RELOCATION PLATFORM - ROOM DETAILS STYLES
+ * Clean expanded property card layout, visual gallery, facility badges, and proximity map
+ */
+
+/* ==========================================================================
+   Page Container & Expanded Property Card
+   ========================================================================== */
+.room-page-shell {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: var(--space-4) var(--space-6) var(--space-16);
+}
+
+.room-detail-card {
+  background: var(--color-white);
+  border: 1px solid var(--slate-200);
+  border-radius: var(--radius-2xl);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  padding: var(--space-6);
+}
+
+/* ==========================================================================
+   Large Photo Gallery
+   ========================================================================== */
+.gallery-container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.gallery-main-view {
+  width: 100%;
+  height: clamp(280px, 48vw, 440px);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  position: relative;
+  background: var(--slate-100);
+  box-shadow: var(--shadow-sm);
+}
+
+.gallery-main-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity var(--transition-base);
+}
+
+.gallery-badge-overlay {
+  position: absolute;
+  top: var(--space-4);
+  left: var(--space-4);
+  display: flex;
+  gap: var(--space-2);
+  z-index: 2;
+}
+
+.gallery-thumbs-row {
+  display: flex;
+  gap: var(--space-3);
+  overflow-x: auto;
+}
+
+.gallery-thumb {
+  width: 90px;
+  height: 60px;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  cursor: pointer;
+  border: 2px solid transparent;
+  opacity: 0.7;
+  transition: all var(--transition-fast);
+  flex-shrink: 0;
+}
+
+.gallery-thumb:hover {
+  opacity: 0.95;
+}
+
+.gallery-thumb.active {
+  opacity: 1;
+  border-color: var(--primary-600);
+  box-shadow: 0 0 0 2px var(--primary-glow);
+}
+
+.gallery-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ==========================================================================
+   Essential Information Header (Name, Price, Distance, Room Type)
+   ========================================================================== */
+.room-header-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+  border-bottom: 1px solid var(--slate-100);
+  padding-bottom: var(--space-5);
+}
+
+.room-meta-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.room-title {
+  font-size: clamp(1.45rem, 3vw, 1.95rem);
+  font-weight: var(--font-weight-extrabold);
+  color: var(--slate-900);
+  line-height: 1.2;
+}
+
+.room-sub-meta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  font-size: var(--font-size-sm);
+  color: var(--slate-500);
+  font-weight: var(--font-weight-medium);
+  flex-wrap: wrap;
+}
+
+.meta-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.room-price-box {
+  text-align: right;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.room-price {
+  font-size: clamp(1.5rem, 3.5vw, 2.15rem);
+  font-weight: var(--font-weight-extrabold);
+  color: var(--primary-700);
+  line-height: 1;
+}
+
+.room-price-sub {
+  font-size: var(--font-size-xs);
+  color: var(--slate-500);
+  margin-top: 2px;
+}
+
+/* ==========================================================================
+   Compact Facility Visual Tags (Wi-Fi, Food, AC, Laundry, Parking)
+   ========================================================================== */
+.facilities-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2-5);
+}
+
+.facilities-label {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  color: var(--slate-400);
+  text-transform: uppercase;
+  letter-spacing: var(--letter-spacing-wide);
+}
+
+.facilities-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.facility-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1-5);
+  padding: 0.45rem 0.95rem;
+  background: var(--slate-50);
+  border: 1px solid var(--slate-200);
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  color: var(--slate-700);
+  transition: all var(--transition-fast);
+}
+
+.facility-pill:hover {
+  background: var(--primary-50);
+  color: var(--primary-700);
+  border-color: var(--primary-200);
+}
+
+/* ==========================================================================
+   Room Proximity Mini-Map (College Highlighted for Context)
+   ========================================================================== */
+.map-context-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2-5);
+}
+
+.room-map-box {
+  width: 100%;
+  height: 240px;
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  border: 1px solid var(--slate-200);
+  position: relative;
+  box-shadow: var(--shadow-xs);
+}
+
+#roomLocationMap {
+  width: 100%;
+  height: 100%;
+}
+
+.map-distance-banner {
+  position: absolute;
+  bottom: var(--space-3);
+  right: var(--space-3);
+  z-index: 500;
+  background: rgba(255, 255, 255, 0.96);
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--slate-200);
+  border-radius: var(--radius-full);
+  padding: 0.35rem 0.85rem;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  color: var(--slate-800);
+  box-shadow: var(--shadow-md);
+  display: flex;
+  align-items: center;
+  gap: var(--space-1-5);
+}
+
+/* ==========================================================================
+   Room Owner & Contact Details Section
+   ========================================================================== */
+.room-owner-section {
+  background: var(--slate-50);
+  border: 1.5px solid var(--slate-200);
+  border-radius: var(--radius-xl);
+  padding: var(--space-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  box-shadow: var(--shadow-xs);
+}
+
+.room-owner-section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  padding-bottom: var(--space-3);
+  border-bottom: 1px solid var(--slate-200);
+}
+
+.room-owner-header-title {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-extrabold);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--slate-600);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.room-owner-profile {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+}
+
+.room-owner-avatar-lg {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #4f46e5 0%, #3b82f6 100%);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.35rem;
+  font-weight: 800;
+  box-shadow: 0 4px 12px rgba(79, 70, 229, 0.25);
+  flex-shrink: 0;
+}
+
+.room-owner-bio {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  flex: 1;
+  min-width: 180px;
+}
+
+.room-owner-name-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+}
+
+.room-owner-full-name {
+  font-size: 1.1rem;
+  font-weight: var(--font-weight-extrabold);
+  color: var(--slate-900);
+}
+
+.room-owner-role-desc {
+  font-size: var(--font-size-xs);
+  color: var(--slate-500);
+}
+
+.room-owner-response-pill {
+  font-size: 0.72rem;
+  color: #047857;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.room-owner-contact-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+  padding-top: var(--space-1);
+}
+
+.btn-owner-call {
+  flex: 1;
+  min-width: 180px;
+  padding: 0.75rem 1.25rem;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-extrabold);
+  border-radius: var(--radius-xl);
+  background: #ecfdf5;
+  color: #047857;
+  border: 1.5px solid #a7f3d0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  text-decoration: none;
+  transition: all var(--transition-fast);
+  cursor: pointer;
+}
+
+.btn-owner-call:hover {
+  background: #059669;
+  color: #fff;
+  border-color: #059669;
+  box-shadow: 0 4px 12px rgba(5, 150, 105, 0.3);
+}
+
+.btn-owner-whatsapp {
+  flex: 1;
+  min-width: 180px;
+  padding: 0.75rem 1.25rem;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-extrabold);
+  border-radius: var(--radius-xl);
+  background: #25d366;
+  color: #fff;
+  border: 1.5px solid #25d366;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  text-decoration: none;
+  transition: all var(--transition-fast);
+  cursor: pointer;
+}
+
+.btn-owner-whatsapp:hover {
+  background: #1eb857;
+  border-color: #1eb857;
+  box-shadow: 0 4px 12px rgba(37, 211, 102, 0.35);
+}
+
+/* ==========================================================================
+   Primary Actions (Interested & Save)
+   ========================================================================== */
+.room-actions-bar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding-top: var(--space-2);
+}
+
+.btn-interested {
+  flex: 1;
+  padding: 0.95rem 1.75rem;
+  font-size: 1rem;
+  font-weight: var(--font-weight-extrabold);
+  border-radius: var(--radius-xl);
+  background: var(--primary-gradient);
+  color: var(--color-white);
+  box-shadow: 0 4px 14px var(--primary-glow);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  border: none;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.btn-interested:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px var(--primary-glow);
+}
+
+.btn-save-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-1-5);
+  padding: 0.95rem 1.4rem;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  border-radius: var(--radius-xl);
+  background: var(--slate-100);
+  color: var(--slate-700);
+  border: 1px solid var(--slate-200);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.btn-save-toggle:hover {
+  background: var(--slate-200);
+  color: var(--slate-900);
+}
+
+.btn-save-toggle.saved {
+  background: #ffe4e6;
+  border-color: #fecdd3;
+  color: var(--danger-600);
+}
+
+.btn-save-toggle.saved svg {
+  fill: var(--danger-500);
+  stroke: var(--danger-500);
+}
+
+/* ==========================================================================
+   Responsive Adaptations
+   ========================================================================== */
+@media (max-width: 640px) {
+  .room-page-shell {
+    padding: var(--space-2) var(--space-4) var(--space-12);
+  }
+  .room-detail-card {
+    padding: var(--space-4);
+    border-radius: var(--radius-xl);
+  }
+  .room-header-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .room-price-box {
+    text-align: left;
+    align-items: flex-start;
+    margin-top: var(--space-2);
+  }
+  .room-actions-bar {
+    flex-direction: row;
+  }
+}

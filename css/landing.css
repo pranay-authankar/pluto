@@ -1,0 +1,917 @@
+/**
+ * STUDENT RELOCATION PLATFORM - COLLEGE-FIRST LANDING PAGE STYLES
+ * Ultra-clean, student-focused, visual-first architecture.
+ */
+
+/* ==========================================================================
+   Page Shell & Background
+   ========================================================================== */
+.college-first-page {
+  position: relative;
+  min-height: calc(100vh - 72px);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding-top: clamp(2rem, 5vw, 4rem);
+  padding-bottom: clamp(3rem, 6vw, 5rem);
+  background-color: var(--color-bg);
+  overflow-x: hidden;
+}
+
+/* Subtle, high-end mesh ambient glow */
+.college-first-bg {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 1280px;
+  height: 600px;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.65;
+  background-image: 
+    radial-gradient(circle at 50% 15%, rgba(79, 70, 229, 0.08) 0%, transparent 60%),
+    radial-gradient(circle at 80% 35%, rgba(16, 185, 129, 0.05) 0%, transparent 45%),
+    linear-gradient(to right, rgba(226, 232, 240, 0.45) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(226, 232, 240, 0.45) 1px, transparent 1px);
+  background-size: 100% 100%, 100% 100%, 48px 48px, 48px 48px;
+  mask-image: radial-gradient(circle at center 35%, black 40%, transparent 80%);
+  -webkit-mask-image: radial-gradient(circle at center 35%, black 40%, transparent 80%);
+}
+
+.college-first-container {
+  position: relative;
+  z-index: 1;
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 0 var(--space-4);
+}
+
+/* ==========================================================================
+   Hero & College Selection Header
+   ========================================================================== */
+.college-first-hero {
+  text-align: center;
+  max-width: 760px;
+  margin: 0 auto var(--space-8);
+}
+
+/* Campus Context Pill */
+.campus-context-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 0.4rem 1.1rem;
+  background-color: var(--color-white);
+  border: 1px solid var(--slate-200);
+  border-radius: var(--radius-full);
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+  font-size: var(--font-size-xs);
+  font-weight: 700;
+  color: var(--slate-700);
+  margin-bottom: var(--space-3);
+  letter-spacing: 0.02em;
+  transition: all var(--transition-fast);
+}
+
+.campus-context-pill:hover {
+  border-color: var(--primary-300);
+  box-shadow: 0 4px 12px rgba(79, 70, 229, 0.08);
+}
+
+.pulse-indicator {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.pulse-active {
+  background-color: #10b981;
+  box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+  animation: pulse-emerald 2s infinite;
+}
+
+.pulse-inactive {
+  background-color: #f59e0b;
+  box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.6);
+  animation: pulse-amber 2s infinite;
+}
+
+@keyframes pulse-emerald {
+  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+  70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(16, 185, 129, 0); }
+  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+}
+
+@keyframes pulse-amber {
+  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.6); }
+  70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(245, 158, 11, 0); }
+  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(245, 158, 11, 0); }
+}
+
+.college-first-title {
+  font-size: clamp(2.4rem, 5vw, 3.6rem);
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -0.035em;
+  color: var(--slate-900);
+  margin-bottom: var(--space-2);
+}
+
+.title-accent {
+  background: linear-gradient(135deg, var(--primary-600) 0%, #4338ca 50%, #2563eb 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.college-first-subtitle {
+  font-size: clamp(1rem, 1.8vw, 1.15rem);
+  color: var(--slate-500);
+  font-weight: 500;
+  line-height: 1.5;
+  max-width: 600px;
+  margin: 0 auto var(--space-6);
+}
+
+/* ==========================================================================
+   Active College Context Card (When Selected)
+   ========================================================================== */
+.college-active-card {
+  background: linear-gradient(135deg, #ffffff 0%, #f8faff 100%);
+  border: 1.5px solid var(--primary-200);
+  border-radius: var(--radius-2xl);
+  padding: var(--space-4) var(--space-6);
+  max-width: 680px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  box-shadow: 0 10px 28px -6px rgba(79, 70, 229, 0.12), 0 2px 8px rgba(0, 0, 0, 0.04);
+  animation: cardFadeIn 0.3s ease-out;
+}
+
+@keyframes cardFadeIn {
+  from { opacity: 0; transform: translateY(-6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.active-card-main {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  text-align: left;
+}
+
+.active-campus-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-xl);
+  background: linear-gradient(135deg, var(--primary-600) 0%, #4338ca 100%);
+  color: var(--color-white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.45rem;
+  box-shadow: 0 4px 14px var(--primary-glow);
+  flex-shrink: 0;
+}
+
+.active-campus-details {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.active-campus-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.active-campus-name {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--slate-900);
+  letter-spacing: -0.01em;
+}
+
+.active-campus-status {
+  font-size: 0.68rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+  background: #dcfce7;
+  color: #15803d;
+}
+
+.active-campus-location {
+  font-size: var(--font-size-xs);
+  color: var(--slate-500);
+  font-weight: 600;
+}
+
+.btn-switch-college {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--color-white);
+  border: 1.5px solid var(--primary-200);
+  color: var(--primary-700);
+  font-size: var(--font-size-xs);
+  font-weight: 700;
+  padding: 0.55rem 1rem;
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition-fast);
+  flex-shrink: 0;
+}
+
+.btn-switch-college:hover {
+  background: var(--primary-50);
+  border-color: var(--primary-400);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(79, 70, 229, 0.15);
+}
+
+/* ==========================================================================
+   College Selector Dropdown Box
+   ========================================================================== */
+.college-selector-wrapper {
+  position: relative;
+  max-width: 680px;
+  margin: 0 auto;
+  text-align: left;
+}
+
+.college-selector-wrapper.selector-shake-highlight {
+  animation: selectorShake 0.45s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+}
+
+.college-selector-wrapper.selector-shake-highlight .college-selector-box {
+  border-color: var(--primary-600);
+  box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.25), 0 12px 28px rgba(79, 70, 229, 0.15);
+}
+
+@keyframes selectorShake {
+  10%, 90% { transform: translate3d(-3px, 0, 0); }
+  20%, 80% { transform: translate3d(5px, 0, 0); }
+  30%, 50%, 70% { transform: translate3d(-6px, 0, 0); }
+  40%, 60% { transform: translate3d(6px, 0, 0); }
+}
+
+.college-selector-box {
+  background: var(--color-white);
+  border: 1.5px solid var(--slate-300);
+  border-radius: var(--radius-2xl);
+  padding: 0.65rem 0.85rem 0.65rem 1.25rem;
+  box-shadow: 0 10px 30px -4px rgba(15, 23, 42, 0.07), 0 2px 8px rgba(0, 0, 0, 0.03);
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  transition: all var(--transition-fast);
+}
+
+.college-selector-box:focus-within {
+  border-color: var(--primary-500);
+  box-shadow: 0 14px 38px -4px rgba(79, 70, 229, 0.18), 0 0 0 3px rgba(79, 70, 229, 0.15);
+}
+
+.selector-icon {
+  color: var(--primary-600);
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.college-selector-input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  outline: none;
+  font-family: var(--font-family-sans);
+  font-size: var(--font-size-base);
+  font-weight: 600;
+  color: var(--slate-900);
+}
+
+.college-selector-input::placeholder {
+  color: var(--slate-400);
+  font-weight: 400;
+}
+
+.selector-clear-btn {
+  background: var(--slate-100);
+  color: var(--slate-500);
+  border: none;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  transition: all var(--transition-fast);
+}
+
+.selector-clear-btn:hover {
+  background: var(--slate-200);
+  color: var(--slate-800);
+}
+
+.selector-cancel-btn {
+  font-size: 0.78rem;
+  padding: 0.45rem 0.85rem;
+  border-radius: var(--radius-lg);
+  font-weight: 600;
+}
+
+/* Dropdown Menu */
+.college-selector-dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  right: 0;
+  background: var(--color-white);
+  border: 1.5px solid var(--slate-200);
+  border-radius: var(--radius-xl);
+  box-shadow: 0 20px 40px -6px rgba(15, 23, 42, 0.18), 0 4px 16px rgba(0, 0, 0, 0.06);
+  z-index: 100;
+  max-height: 310px;
+  overflow-y: auto;
+  padding: var(--space-2);
+  animation: dropdownEnter 0.2s ease-out;
+}
+
+@keyframes dropdownEnter {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.dropdown-meta-header {
+  padding: 0.45rem 0.85rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--slate-400);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--slate-100);
+  margin-bottom: 4px;
+}
+
+.dropdown-meta-hint {
+  font-size: 0.68rem;
+  color: var(--slate-400);
+  font-weight: 500;
+}
+
+.dropdown-empty-state {
+  padding: 1.25rem 1rem;
+  font-size: 0.88rem;
+  color: var(--slate-400);
+  text-align: center;
+}
+
+.college-dropdown-item {
+  padding: 0.7rem 0.95rem;
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  transition: all var(--transition-fast);
+}
+
+.college-dropdown-item:hover,
+.college-dropdown-item.is-focused {
+  background: var(--primary-50);
+}
+
+.college-dropdown-item.is-selected {
+  background: #f0fdf4;
+}
+
+.dropdown-item-content {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.dropdown-item-icon {
+  font-size: 1.15rem;
+}
+
+.dropdown-item-title {
+  font-size: var(--font-size-sm);
+  font-weight: 700;
+  color: var(--slate-900);
+}
+
+.college-dropdown-item.is-selected .dropdown-item-title {
+  color: #15803d;
+}
+
+.dropdown-item-sub {
+  font-size: 0.74rem;
+  color: var(--slate-400);
+  font-weight: 500;
+}
+
+.dropdown-badge-active {
+  font-size: 0.68rem;
+  font-weight: 800;
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+  background: #dcfce7;
+  color: #15803d;
+  text-transform: uppercase;
+}
+
+.dropdown-action-hint {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--slate-400);
+}
+
+.college-dropdown-item:hover .dropdown-action-hint {
+  color: var(--primary-600);
+}
+
+/* Popular Campus Chips */
+.popular-campuses-bar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-top: var(--space-3);
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.popular-label {
+  font-size: 0.74rem;
+  font-weight: 700;
+  color: var(--slate-400);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.popular-chips-list {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.popular-chip {
+  background: var(--color-white);
+  border: 1px solid var(--slate-200);
+  border-radius: var(--radius-full);
+  padding: 0.3rem 0.75rem;
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  color: var(--slate-700);
+  cursor: pointer;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+  transition: all var(--transition-fast);
+}
+
+.popular-chip:hover {
+  border-color: var(--primary-400);
+  color: var(--primary-700);
+  background: var(--primary-50);
+  transform: translateY(-1px);
+}
+
+.popular-chip.chip-active {
+  background: var(--primary-600);
+  border-color: var(--primary-600);
+  color: var(--color-white);
+  box-shadow: 0 2px 8px var(--primary-glow);
+}
+
+/* ==========================================================================
+   The 4 Main Options Cards: Rooms | Food | Room Partner | Nearby
+   ========================================================================== */
+.college-features-section {
+  max-width: 980px;
+  margin: 0 auto;
+}
+
+.features-status-header {
+  text-align: center;
+  margin-bottom: var(--space-5);
+}
+
+.features-status-label {
+  font-size: var(--font-size-xs);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--slate-400);
+}
+
+.features-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-5);
+}
+
+/* Feature Card Base */
+.feature-card {
+  background: var(--color-white);
+  border: 1.5px solid var(--slate-200);
+  border-radius: var(--radius-2xl);
+  padding: var(--space-6) var(--space-5);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+  position: relative;
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition-base);
+  outline: none;
+}
+
+/* Feature Icon Wrapper */
+.feature-icon-wrapper {
+  width: 56px;
+  height: 56px;
+  border-radius: var(--radius-xl);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: var(--space-4);
+  transition: all var(--transition-fast);
+}
+
+.feature-title {
+  font-size: var(--font-size-xl);
+  font-weight: 800;
+  line-height: 1.2;
+  margin-bottom: 2px;
+  letter-spacing: -0.015em;
+}
+
+.feature-subtitle {
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  margin-bottom: var(--space-5);
+}
+
+.feature-footer {
+  margin-top: auto;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--slate-100);
+}
+
+.feature-pill {
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 3px 9px;
+  border-radius: var(--radius-full);
+  letter-spacing: 0.02em;
+}
+
+.feature-arrow {
+  font-size: 1.1rem;
+  font-weight: 700;
+  transition: transform var(--transition-fast);
+}
+
+/* --------------------------------------------------------------------------
+   ACTIVE STATE (After College Selection)
+   -------------------------------------------------------------------------- */
+.feature-card.feature-active {
+  cursor: pointer;
+  border-color: var(--slate-200);
+  animation: cardReveal 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes cardReveal {
+  from {
+    opacity: 0.7;
+    transform: translateY(8px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.feature-card.feature-active:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 32px -4px rgba(15, 23, 42, 0.12), 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.feature-card.feature-active:hover .feature-icon-wrapper {
+  transform: scale(1.08);
+}
+
+.feature-card.feature-active:hover .feature-arrow {
+  transform: translateX(4px);
+}
+
+/* Individual Feature Theming for Active State */
+/* 1. ROOMS: Rich Indigo/Blue */
+.feature-card.card-rooms.feature-active {
+  background: linear-gradient(180deg, #ffffff 0%, #fbfcfe 100%);
+}
+.feature-card.card-rooms.feature-active:hover {
+  border-color: var(--primary-300);
+}
+.feature-card.card-rooms.feature-active .feature-icon-wrapper {
+  background: var(--primary-50);
+  color: var(--primary-600);
+}
+.feature-card.card-rooms.feature-active .feature-title {
+  color: var(--slate-900);
+}
+.feature-card.card-rooms.feature-active .feature-subtitle {
+  color: var(--slate-500);
+}
+.feature-card.card-rooms.feature-active .feature-pill {
+  background: var(--primary-50);
+  color: var(--primary-700);
+}
+.feature-card.card-rooms.feature-active .feature-arrow {
+  color: var(--primary-600);
+}
+
+/* 2. FOOD: Warm Emerald/Teal */
+.feature-card.card-food.feature-active {
+  background: linear-gradient(180deg, #ffffff 0%, #fafffc 100%);
+}
+.feature-card.card-food.feature-active:hover {
+  border-color: #86efac;
+}
+.feature-card.card-food.feature-active .feature-icon-wrapper {
+  background: #ecfdf5;
+  color: #059669;
+}
+.feature-card.card-food.feature-active .feature-title {
+  color: var(--slate-900);
+}
+.feature-card.card-food.feature-active .feature-subtitle {
+  color: var(--slate-500);
+}
+.feature-card.card-food.feature-active .feature-pill {
+  background: #ecfdf5;
+  color: #047857;
+}
+.feature-card.card-food.feature-active .feature-arrow {
+  color: #059669;
+}
+
+/* 3. ROOM PARTNER: Rich Purple/Violet */
+.feature-card.card-roommate.feature-active {
+  background: linear-gradient(180deg, #ffffff 0%, #faf8ff 100%);
+}
+.feature-card.card-roommate.feature-active:hover {
+  border-color: #d8b4fe;
+}
+.feature-card.card-roommate.feature-active .feature-icon-wrapper {
+  background: #f5f3ff;
+  color: #7c3aed;
+}
+.feature-card.card-roommate.feature-active .feature-title {
+  color: var(--slate-900);
+}
+.feature-card.card-roommate.feature-active .feature-subtitle {
+  color: var(--slate-500);
+}
+.feature-card.card-roommate.feature-active .feature-pill {
+  background: #f5f3ff;
+  color: #6d28d9;
+}
+.feature-card.card-roommate.feature-active .feature-arrow {
+  color: #7c3aed;
+}
+
+/* 4. NEARBY: Amber/Sky Blue */
+.feature-card.card-nearby.feature-active {
+  background: linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
+}
+.feature-card.card-nearby.feature-active:hover {
+  border-color: #7dd3fc;
+}
+.feature-card.card-nearby.feature-active .feature-icon-wrapper {
+  background: #f0f9ff;
+  color: #0284c7;
+}
+.feature-card.card-nearby.feature-active .feature-title {
+  color: var(--slate-900);
+}
+.feature-card.card-nearby.feature-active .feature-subtitle {
+  color: var(--slate-500);
+}
+.feature-card.card-nearby.feature-active .feature-pill {
+  background: #f0f9ff;
+  color: #0369a1;
+}
+.feature-card.card-nearby.feature-active .feature-arrow {
+  color: #0284c7;
+}
+
+/* --------------------------------------------------------------------------
+   INACTIVE STATE (Before College Selection)
+   -------------------------------------------------------------------------- */
+.feature-card.feature-inactive {
+  background: #f8fafc;
+  border-color: var(--slate-200);
+  opacity: 0.62;
+  cursor: not-allowed;
+  box-shadow: none;
+  filter: grayscale(35%);
+}
+
+.feature-card.feature-inactive:hover {
+  transform: none;
+  border-color: var(--slate-300);
+  box-shadow: none;
+  opacity: 0.75;
+}
+
+.feature-card.feature-inactive .feature-icon-wrapper {
+  background: var(--slate-200);
+  color: var(--slate-400);
+  transform: none;
+}
+
+.feature-card.feature-inactive .feature-title {
+  color: var(--slate-600);
+}
+
+.feature-card.feature-inactive .feature-subtitle {
+  color: var(--slate-400);
+}
+
+.feature-card.feature-inactive .feature-pill {
+  background: var(--slate-200);
+  color: var(--slate-500);
+}
+
+.feature-card.feature-inactive .feature-arrow {
+  color: var(--slate-300);
+  transform: none;
+}
+
+/* ==========================================================================
+   Responsive Breakpoints
+   ========================================================================== */
+@media (max-width: 1024px) {
+  .features-cards-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-4);
+  }
+}
+
+@media (max-width: 640px) {
+  .college-first-page {
+    padding-top: var(--space-6);
+  }
+
+  .college-first-title {
+    font-size: 2.1rem;
+  }
+
+  .college-active-card {
+    flex-direction: column;
+    align-items: stretch;
+    padding: var(--space-4);
+  }
+
+  .btn-switch-college {
+    justify-content: center;
+  }
+
+  .college-selector-box {
+    padding: 0.6rem 0.8rem;
+  }
+
+  .features-cards-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-3);
+  }
+
+  .feature-card {
+    padding: var(--space-5) var(--space-4);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   HOME REQUIREMENTS BANNER / CARD
+   -------------------------------------------------------------------------- */
+.college-requirements-banner-section {
+  margin-top: var(--space-8);
+  margin-bottom: var(--space-10);
+}
+
+.home-requirements-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-6);
+  padding: var(--space-6) var(--space-8);
+  border-radius: var(--radius-xl);
+  border: 1.5px solid var(--slate-200);
+  background: #ffffff;
+  box-shadow: 0 4px 16px rgba(15, 23, 42, 0.04);
+  transition: all 0.25s ease;
+}
+
+.home-requirements-card.req-locked {
+  background: #f8fafc;
+  border-color: var(--slate-200);
+  opacity: 0.72;
+}
+
+.home-requirements-card.req-unlocked {
+  background: linear-gradient(135deg, #ffffff 0%, #f0fdf4 100%);
+  border-color: #86efac;
+  box-shadow: 0 8px 24px rgba(34, 197, 94, 0.08);
+}
+
+.home-requirements-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.home-requirements-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0.2rem 0.6rem;
+  border-radius: var(--radius-full);
+  width: fit-content;
+}
+
+.req-locked .home-requirements-badge {
+  background: var(--slate-200);
+  color: var(--slate-600);
+}
+
+.req-unlocked .home-requirements-badge {
+  background: #dcfce7;
+  color: #15803d;
+}
+
+.home-requirements-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--slate-900);
+  margin: 0;
+}
+
+.req-locked .home-requirements-title {
+  color: var(--slate-600);
+}
+
+.home-requirements-desc {
+  font-size: 0.9rem;
+  color: var(--slate-500);
+  margin: 0;
+  max-width: 580px;
+}
+
+.btn-req-disabled {
+  background: var(--slate-200) !important;
+  color: var(--slate-500) !important;
+  border: 1px solid var(--slate-300) !important;
+  cursor: not-allowed !important;
+  opacity: 0.75 !important;
+  box-shadow: none !important;
+  pointer-events: auto !important; /* allows onClick feedback toast */
+}
+
+@media (max-width: 768px) {
+  .home-requirements-card {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: var(--space-5);
+    gap: var(--space-4);
+  }
+
+  .home-requirements-card button {
+    width: 100%;
+    justify-content: center;
+  }
+}

@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Telegraph Student Lofts | Pluto</title>
+  <meta name="description" content="Verified student room details: price, distance to campus, facilities, and proximity map.">
+
+  <!-- Core Design System -->
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/room-details.css">
+
+  <!-- Leaflet Map CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="" />
+</head>
+<body class="app-shell">
+
+  <!-- ========================================================================
+       TOP NAVIGATION BAR
+       ======================================================================== -->
+  <header class="site-header">
+    <div class="container header-container">
+      
+      <!-- Brand Logo -->
+      <a href="index.html" class="brand" aria-label="Pluto Home">
+        <div class="brand-icon-wrapper">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
+            <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
+          </svg>
+        </div>
+        <div class="brand-text">
+          <span class="brand-title">Pluto</span>
+          <span class="brand-tag">Your World Away From Home.</span>
+        </div>
+      </a>
+
+      <!-- Quick Back Nav Link -->
+      <div class="header-actions">
+        <a href="rooms.html" class="nav-link">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="m15 18-6-6 6-6"/></svg>
+          Rooms
+        </a>
+        <a href="dashboard.html" class="nav-link">
+          Dashboard
+        </a>
+        <a href="food.html" class="nav-link">
+          Food
+        </a>
+        <a href="roommates.html" class="nav-link">
+          Partners
+        </a>
+        <a href="nearby.html" class="nav-link">
+          Nearby
+        </a>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- ========================================================================
+       EXPANDED PROPERTY DETAIL CARD
+       Visual-first, minimal, clean student-focused sheet
+       ======================================================================== -->
+  <main class="main-content">
+    <div class="room-page-shell">
+
+      <div class="room-detail-card">
+        
+        <!-- 1. Large Photo Gallery Visual -->
+        <section class="gallery-container" aria-label="Room Photo Gallery">
+          <div class="gallery-main-view">
+            <!-- Verified Student Badge Overlay -->
+            <div class="gallery-badge-overlay">
+              <span class="badge badge-success"><span class="badge-dot"></span> Campus Verified</span>
+              <span class="badge badge-primary">★ Best Match</span>
+            </div>
+
+            <!-- Main Showcase Image -->
+            <img 
+              src="assets/dorm_main.jpg" 
+              alt="Student Dorm Room" 
+              class="gallery-main-img" 
+              id="galleryMainImg"
+            >
+          </div>
+
+          <!-- Thumbnail Switcher Strip -->
+          <div class="gallery-thumbs-row">
+            <div class="gallery-thumb active" data-img="assets/dorm_main.jpg" title="Main Bedroom View">
+              <img src="assets/dorm_main.jpg" alt="Dorm Room Main">
+            </div>
+            <div class="gallery-thumb" data-img="assets/dorm_study.jpg" title="Dedicated Study Area">
+              <img src="assets/dorm_study.jpg" alt="Dorm Study Desk">
+            </div>
+          </div>
+        </section>
+
+        <!-- 2. Essential Information (Name, ₹Price, Distance, Room Type) -->
+        <section class="room-header-row">
+          <div class="room-meta-group">
+            <h1 class="room-title">Telegraph Student Lofts</h1>
+            
+            <div class="room-sub-meta">
+              <span class="meta-pill" style="color: var(--primary-700); font-weight: 700;">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path></svg>
+                Single Private Room
+              </span>
+              <span>•</span>
+              <span class="meta-pill" id="roomCollegeContext">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon></svg>
+                0.4 km from Campus
+              </span>
+            </div>
+          </div>
+
+          <!-- Price Display (₹INR & USD secondary) -->
+          <div class="room-price-box">
+            <div class="room-price">₹8,500<span style="font-size: 1rem; font-weight: 600; color: var(--slate-400);">/mo</span></div>
+            <div class="room-price-sub">~$740 USD • All bills included</div>
+          </div>
+        </section>
+
+        <!-- 3. Compact Visual Tags for Facilities (Wi-Fi, Food, AC, Laundry, Parking) -->
+        <section class="facilities-section">
+          <div class="facilities-label">Included Facilities</div>
+          <div class="facilities-grid">
+            <span class="facility-pill">
+              <span>📶</span> Wi-Fi
+            </span>
+            <span class="facility-pill">
+              <span>🍱</span> Food
+            </span>
+            <span class="facility-pill">
+              <span>❄️</span> AC
+            </span>
+            <span class="facility-pill">
+              <span>🧺</span> Laundry
+            </span>
+            <span class="facility-pill">
+              <span>🅿️</span> Parking
+            </span>
+          </div>
+        </section>
+
+        <!-- 4. Location On Map (College Highlighted for Distance Context) -->
+        <section class="map-context-section">
+          <div class="facilities-label">Campus Proximity Map</div>
+          
+          <div class="room-map-box">
+            <!-- Distance Overlay Badge -->
+            <div class="map-distance-banner" id="mapDistanceBadge">
+              <span class="status-pulse"></span>
+              <span>0.4 km • 5 min walk to Campus</span>
+            </div>
+
+            <div id="roomLocationMap" role="region" aria-label="Room Proximity Route Map"></div>
+          </div>
+        </section>
+
+        <!-- 5. Owner Details & Direct Contact -->
+        <section class="room-owner-section">
+          <div class="room-owner-section-header">
+            <div class="room-owner-header-title">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+              </svg>
+              <span>Property Owner & Landlord Details</span>
+            </div>
+            <div class="badge badge-success" style="font-size: 11px;">
+              <span class="badge-dot"></span> ID Verified Landlord
+            </div>
+          </div>
+
+          <div class="room-owner-profile">
+            <div class="room-owner-avatar-lg" id="ownerAvatar">R</div>
+
+            <div class="room-owner-bio">
+              <div class="room-owner-name-row">
+                <h2 class="room-owner-full-name" id="ownerName">Rajesh Sharma</h2>
+                <span class="badge badge-primary" style="font-size: 10px; padding: 2px 8px;">Direct Owner</span>
+              </div>
+              <span class="room-owner-role-desc" id="ownerRole">Verified Property Owner • Zero Brokerage</span>
+              <div class="room-owner-response-pill">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+                </svg>
+                <span id="ownerResponseRate">Typically responds in under 15 mins</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Direct Owner Action Buttons -->
+          <div class="room-owner-contact-actions">
+            <a href="tel:+9198201*****" class="btn-owner-call" id="ownerCallBtn">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+              </svg>
+              <span id="ownerPhoneText">Call +91 98201 *****</span>
+            </a>
+
+            <a href="https://wa.me/919820144520" target="_blank" rel="noopener noreferrer" class="btn-owner-whatsapp" id="ownerWaBtn">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2m.01 1.67c2.2 0 4.26.86 5.82 2.42a8.225 8.225 0 0 1 2.41 5.83c0 4.54-3.7 8.24-8.24 8.24-1.48 0-2.93-.4-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.196 8.196 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.24-8.24m4.52 11.64c-.25-.13-1.47-.72-1.7-.81-.23-.08-.39-.13-.56.13-.17.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.13-1.06-.39-2.03-1.25-.75-.67-1.26-1.5-1.41-1.75-.15-.25-.02-.39.11-.51.11-.11.25-.29.37-.44.13-.15.17-.25.25-.42.08-.17.04-.31-.02-.44-.06-.13-.56-1.35-.77-1.85-.2-.49-.41-.42-.56-.43h-.48c-.17 0-.44.06-.67.31-.23.25-.88.86-.88 2.1 0 1.24.9 2.44 1.03 2.61.13.17 1.77 2.7 4.29 3.79.6.26 1.07.41 1.43.53.6.19 1.15.16 1.58.1.48-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.15-1.18-.06-.11-.22-.18-.47-.3"></path>
+              </svg>
+              <span>Chat on WhatsApp</span>
+            </a>
+          </div>
+        </section>
+
+        <!-- 6. Primary Action Buttons (Interested & Save) -->
+        <section class="room-actions-bar">
+          <button class="btn-interested" id="interestedBtn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="m22 2-7 20-4-9-9-4Z"></path><path d="M22 2 11 13"></path></svg>
+            <span>Interested</span>
+          </button>
+
+          <button class="btn-save-toggle" id="saveBtn" aria-label="Save this room">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path></svg>
+            <span>Save</span>
+          </button>
+        </section>
+
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Minimal Footer -->
+  <footer class="site-footer" style="padding: var(--space-6) 0;">
+    <div class="container footer-bottom" style="border-top: none; padding-top: 0; justify-content: center;">
+      <div style="font-size: var(--font-size-xs); color: var(--slate-500);">
+        &copy; 2026 Pluto • Verified student housing.
+      </div>
+    </div>
+  </footer>
+
+  <!-- Toast Notification Container Root -->
+  <div class="toast-container" id="toastContainer" aria-live="polite"></div>
+
+  <!-- Leaflet.js -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+  
+  <!-- Scripts -->
+  <script src="js/design-system.js"></script>
+  <script src="js/room-details.js"></script>
+</body>
+</html>

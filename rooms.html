@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Rooms & PGs | Pluto</title>
+  <meta name="description" content="Verified student rooms, single and shared dorms near campus.">
+
+  <!-- Core Design System -->
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/rooms.css">
+</head>
+<body class="app-shell">
+
+  <!-- ========================================================================
+       TOP NAVIGATION BAR
+       ======================================================================== -->
+  <header class="site-header">
+    <div class="container header-container">
+      
+      <!-- Brand Logo -->
+      <a href="index.html" class="brand" aria-label="Pluto Home">
+        <div class="brand-icon-wrapper">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
+            <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
+          </svg>
+        </div>
+        <div class="brand-text">
+          <span class="brand-title">Pluto</span>
+          <span class="brand-tag">Your World Away From Home.</span>
+        </div>
+      </a>
+
+      <!-- Quick Nav Links -->
+      <div class="header-actions">
+        <a href="index.html" class="nav-link">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg>
+          Home
+        </a>
+        <a href="food.html" class="nav-link">
+          Food
+        </a>
+        <a href="roommates.html" class="nav-link">
+          Partners
+        </a>
+        <a href="nearby.html" class="nav-link">
+          Nearby
+        </a>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- ========================================================================
+       ROOMS CATALOG MAIN VIEWPORT
+       ======================================================================== -->
+  <main class="main-content">
+    <div class="rooms-page-shell">
+
+      <!-- Header: Title & Subtitle -->
+      <section class="rooms-header">
+        <div class="rooms-title-group">
+          <h1 class="rooms-title">Student Rooms & Stays</h1>
+          <span class="rooms-subtitle" id="roomsCampusLabel">Verified student stays near campus</span>
+        </div>
+
+        <div class="badge badge-success" style="font-size: var(--font-size-xs);">
+          <span class="badge-dot"></span> Landlord Verified
+        </div>
+      </section>
+
+      <!-- Multi-Category Student Control Filter with Range Strip -->
+      <div class="rooms-filter-container">
+        <div class="rooms-filter-header">
+          <div class="rooms-filter-header-title">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+              <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
+            </svg>
+            <span>Filter Student Stays</span>
+          </div>
+
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <span style="font-size: var(--font-size-xs); color: var(--slate-500);" id="roomsHeaderCount">
+              Showing verified stays
+            </span>
+            <button type="button" class="rooms-reset-btn" id="roomsResetBtn" style="display: none;">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <path d="M18 6 6 18"></path>
+                <path d="m6 6 12 12"></path>
+              </svg>
+              <span>Reset All</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="rooms-filter-grid">
+          <!-- Filter Category 1: Room Type -->
+          <div class="rooms-filter-group">
+            <label for="filterRoomType" class="rooms-filter-label">
+              <span>Room Type</span>
+            </label>
+            <select id="filterRoomType" class="rooms-filter-select">
+              <option value="all">All Room Types</option>
+              <option value="single">Single Room (Private)</option>
+              <option value="shared">Shared Room (2+ Sharing)</option>
+            </select>
+          </div>
+
+          <!-- Filter Category 2: Distance from Campus -->
+          <div class="rooms-filter-group">
+            <label for="filterDistance" class="rooms-filter-label">
+              <span>Max Distance</span>
+            </label>
+            <select id="filterDistance" class="rooms-filter-select">
+              <option value="all">Any Distance</option>
+              <option value="0.3">Within 0.3 km (&lt; 4 min walk)</option>
+              <option value="0.5">Within 0.5 km (&lt; 7 min walk)</option>
+              <option value="1.0">Within 1.0 km (&lt; 12 min walk)</option>
+            </select>
+          </div>
+
+          <!-- Filter Category 3: Key Amenity -->
+          <div class="rooms-filter-group">
+            <label for="filterAmenity" class="rooms-filter-label">
+              <span>Key Amenity</span>
+            </label>
+            <select id="filterAmenity" class="rooms-filter-select">
+              <option value="all">All Amenities</option>
+              <option value="Attached Bath">🚿 Attached Bath</option>
+              <option value="AC">❄️ AC / Climate Control</option>
+              <option value="Wi-Fi">📶 High-Speed Wi-Fi</option>
+              <option value="Power Backup">⚡ Power Backup</option>
+              <option value="Study Desk">📚 Study Desk</option>
+              <option value="Furnished">🪑 Fully Furnished</option>
+              <option value="Food/Mess Nearby">🍽️ Mess / Food Nearby</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Budget Range Strip -->
+        <div class="rooms-budget-strip-container">
+          <div class="rooms-budget-strip-top">
+            <div class="rooms-budget-strip-label">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                <rect x="2" y="6" width="20" height="12" rx="2"></rect>
+                <circle cx="12" cy="12" r="2"></circle>
+                <path d="M6 12h.01M18 12h.01"></path>
+              </svg>
+              <span>Maximum Monthly Budget (Range Strip)</span>
+            </div>
+            <div class="rooms-budget-value-badge" id="budgetRangeDisplay">
+              Any Budget (Up to ₹15,000+)
+            </div>
+          </div>
+
+          <div class="rooms-range-wrapper">
+            <input
+              type="range"
+              min="4000"
+              max="15000"
+              step="500"
+              value="15000"
+              id="budgetRangeInput"
+              class="rooms-range-slider"
+              aria-label="Filter maximum budget range"
+            >
+            <div class="rooms-range-markers">
+              <span>₹4,000</span>
+              <span>₹7,000</span>
+              <span>₹10,000</span>
+              <span>₹12,500</span>
+              <span>₹15,000 (Any)</span>
+            </div>
+          </div>
+
+          <!-- Quick Preset Chips -->
+          <div class="rooms-range-presets">
+            <span style="font-size: 0.68rem; color: var(--slate-500); font-weight: 600;">Quick Presets:</span>
+            <button type="button" class="rooms-preset-chip" data-preset="6500">≤ ₹6,500</button>
+            <button type="button" class="rooms-preset-chip" data-preset="8500">≤ ₹8,500</button>
+            <button type="button" class="rooms-preset-chip" data-preset="10000">≤ ₹10,000</button>
+            <button type="button" class="rooms-preset-chip active" data-preset="15000">Any Budget</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Rooms Grid -->
+      <section class="rooms-grid" id="roomsGrid" aria-label="Rooms Grid">
+        <!-- Rendered dynamically by js/rooms.js -->
+      </section>
+
+    </div>
+  </main>
+
+  <!-- Minimal Footer -->
+  <footer class="site-footer" style="padding: var(--space-6) 0;">
+    <div class="container footer-bottom" style="border-top: none; padding-top: 0; justify-content: center;">
+      <div style="font-size: var(--font-size-xs); color: var(--slate-500);">
+        &copy; 2026 Pluto • Verified student housing.
+      </div>
+    </div>
+  </footer>
+
+  <!-- Toast Notification Container Root -->
+  <div class="toast-container" id="toastContainer" aria-live="polite"></div>
+
+  <!-- Scripts -->
+  <script src="js/design-system.js"></script>
+  <script src="js/rooms.js"></script>
+</body>
+</html>

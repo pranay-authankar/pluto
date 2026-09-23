@@ -1,0 +1,20 @@
+/* Global Design System Imports */
+@import '../css/tokens.css';
+@import '../css/base.css';
+@import '../css/components.css';
+@import '../css/layout.css';
+@import '../css/landing.css';
+@import '../css/requirements.css';
+@import '../css/dashboard.css';
+@import '../css/nearby.css';
+@import '../css/rooms.css';
+@import '../css/room-details.css';
+@import '../css/food.css';
+@import '../css/roommates.css';
+
+/* React App root adjustments */
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}

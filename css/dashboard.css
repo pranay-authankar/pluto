@@ -1,0 +1,375 @@
+/**
+ * STUDENT RELOCATION PLATFORM - RECOMMENDATION DASHBOARD STYLES
+ * Visual Command Center layout: compact cards, filter pills, and large interactive map
+ */
+
+/* ==========================================================================
+   Command Center Layout Shell
+   ========================================================================== */
+.dashboard-shell {
+  height: calc(100vh - var(--nav-height));
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--slate-50);
+}
+
+@media (max-width: 900px) {
+  .dashboard-shell {
+    height: auto;
+    overflow: visible;
+  }
+}
+
+/* ==========================================================================
+   Top Command Bar (College focal point & filters)
+   ========================================================================== */
+.command-bar {
+  background: var(--color-white);
+  border-bottom: 1px solid var(--slate-200);
+  padding: var(--space-3) var(--space-6);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  z-index: var(--z-sticky);
+  flex-shrink: 0;
+}
+
+.command-college-info {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.college-badge-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-md);
+  background: var(--primary-gradient);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.command-college-name {
+  font-size: 1.1rem;
+  font-weight: var(--font-weight-extrabold);
+  color: var(--slate-900);
+  line-height: 1.15;
+}
+
+.command-college-meta {
+  font-size: var(--font-size-xs);
+  color: var(--slate-500);
+}
+
+/* Filter Pills Group */
+.filter-bar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.filter-bar::-webkit-scrollbar {
+  display: none;
+}
+
+.filter-select-pill {
+  appearance: none;
+  -webkit-appearance: none;
+  background: var(--slate-100);
+  border: 1px solid var(--slate-200);
+  border-radius: var(--radius-full);
+  padding: 0.35rem 1.85rem 0.35rem 0.85rem;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  color: var(--slate-700);
+  cursor: pointer;
+  outline: none;
+  transition: all var(--transition-fast);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.65rem center;
+}
+
+.filter-select-pill:hover, .filter-select-pill:focus {
+  border-color: var(--primary-400);
+  background-color: var(--color-white);
+  color: var(--primary-700);
+}
+
+/* ==========================================================================
+   Split Command Canvas: Cards (Left) vs Interactive Map (Right)
+   ========================================================================== */
+.command-canvas {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 440px 1fr;
+  height: 100%;
+  overflow: hidden;
+}
+
+@media (max-width: 1100px) {
+  .command-canvas {
+    grid-template-columns: 380px 1fr;
+  }
+}
+
+@media (max-width: 900px) {
+  .command-canvas {
+    grid-template-columns: 1fr;
+    height: auto;
+    overflow: visible;
+  }
+}
+
+/* Left Sidebar: Compact Recommendation Cards */
+.recs-sidebar {
+  background: var(--slate-50);
+  border-right: 1px solid var(--slate-200);
+  padding: var(--space-4);
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  height: 100%;
+}
+
+.recs-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 var(--space-1);
+}
+
+.recs-title {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  color: var(--slate-500);
+  text-transform: uppercase;
+  letter-spacing: var(--letter-spacing-wide);
+}
+
+/* ==========================================================================
+   Compact Recommendation Card (Name, Price, Distance)
+   ========================================================================== */
+.rec-card {
+  background: var(--color-white);
+  border: 1.5px solid var(--slate-200);
+  border-radius: var(--radius-2xl);
+  padding: var(--space-4) var(--space-5);
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.05);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2-5);
+  position: relative;
+}
+
+.rec-card:hover {
+  border-color: var(--primary-400);
+  box-shadow: var(--shadow-hover);
+  transform: translateY(-2px);
+}
+
+.rec-card.active-card {
+  border-color: var(--primary-600);
+  box-shadow: 0 0 0 2px var(--primary-glow), var(--shadow-md);
+  background: #fcfcff;
+}
+
+.rec-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+}
+
+.rec-badge-group {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1-5);
+}
+
+.rec-category-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.7rem;
+  font-weight: var(--font-weight-bold);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 0.2rem 0.5rem;
+  border-radius: var(--radius-full);
+}
+
+.cat-room { background: var(--primary-50); color: var(--primary-700); }
+.cat-food { background: var(--success-50); color: var(--success-700); }
+.cat-partner { background: #f5f3ff; color: #7c3aed; }
+.cat-nearby { background: var(--info-50); color: var(--info-700); }
+
+.best-match-pill {
+  background: var(--primary-600);
+  color: var(--color-white);
+  font-size: 0.65rem;
+  font-weight: var(--font-weight-bold);
+  padding: 0.2rem 0.55rem;
+  border-radius: var(--radius-full);
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  box-shadow: 0 2px 6px var(--primary-glow);
+}
+
+.rec-name {
+  font-size: 1rem;
+  font-weight: var(--font-weight-bold);
+  color: var(--slate-900);
+  line-height: 1.25;
+}
+
+.rec-card-bottom {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  padding-top: var(--space-2);
+  border-top: 1px solid var(--slate-100);
+}
+
+.rec-price {
+  font-size: 1.05rem;
+  font-weight: var(--font-weight-extrabold);
+  color: var(--primary-700);
+}
+
+.rec-distance {
+  font-size: var(--font-size-xs);
+  color: var(--slate-500);
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+
+/* ==========================================================================
+   Large Interactive Map Container
+   ========================================================================== */
+.map-viewport-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: #e2e8f0;
+}
+
+@media (max-width: 900px) {
+  .map-viewport-container {
+    height: 420px;
+    order: -1;
+  }
+}
+
+#recommendationMap {
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+/* Map Overlay Command Pills */
+.map-status-overlay {
+  position: absolute;
+  top: var(--space-4);
+  right: var(--space-4);
+  z-index: 500;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  pointer-events: none;
+}
+
+.map-control-pill {
+  pointer-events: auto;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--slate-200);
+  border-radius: var(--radius-full);
+  padding: 0.35rem 0.85rem;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  color: var(--slate-700);
+  box-shadow: var(--shadow-md);
+  display: flex;
+  align-items: center;
+  gap: var(--space-1-5);
+}
+
+/* Custom Marker Styles */
+.custom-map-pin {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  color: white;
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.35);
+  border: 2px solid white;
+  transition: transform var(--transition-bounce), box-shadow var(--transition-fast);
+  cursor: pointer;
+}
+
+.custom-map-pin:hover {
+  transform: scale(1.22);
+  z-index: 1000 !important;
+}
+
+.pin-college {
+  background: var(--primary-gradient);
+  width: 48px;
+  height: 48px;
+  box-shadow: 0 6px 20px var(--primary-glow);
+  z-index: 999 !important;
+}
+
+.pin-room { background: #4f46e5; }
+.pin-food { background: #059669; }
+.pin-partner { background: #7c3aed; }
+.pin-nearby { background: #0284c7; }
+
+/* Custom Leaflet Popup Overrides */
+.leaflet-popup-content-wrapper {
+  border-radius: var(--radius-lg);
+  padding: 0;
+  overflow: hidden;
+  box-shadow: var(--shadow-lg);
+  border: 1px solid var(--slate-200);
+}
+
+.leaflet-popup-content {
+  margin: 0;
+  line-height: 1.4;
+}
+
+.map-popup-card {
+  padding: var(--space-3) var(--space-4);
+  background: white;
+}
+
+.map-popup-title {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  color: var(--slate-900);
+}
+
+.map-popup-meta {
+  font-size: var(--font-size-xs);
+  color: var(--slate-500);
+  display: flex;
+  justify-content: space-between;
+  margin-top: 4px;
+}

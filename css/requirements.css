@@ -1,0 +1,593 @@
+/**
+ * STUDENT RELOCATION PLATFORM - REQUIREMENTS PAGE STYLES
+ * Visual selection cards, dynamic budget slider, and mini radius map preview
+ */
+
+/* ==========================================================================
+   Page Shell & Header Bar
+   ========================================================================== */
+.req-page-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: var(--space-4) var(--space-6) var(--space-16);
+}
+
+.req-header {
+  margin-bottom: var(--space-8);
+  text-align: left;
+}
+
+.req-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1-5);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  color: var(--primary-700);
+  background: var(--primary-50);
+  padding: 0.3rem 0.75rem;
+  border-radius: var(--radius-full);
+  margin-bottom: var(--space-2);
+}
+
+.req-title {
+  font-size: clamp(1.65rem, 3vw, 2.25rem);
+  font-weight: var(--font-weight-extrabold);
+  letter-spacing: -0.03em;
+  color: var(--slate-900);
+  line-height: 1.2;
+  margin-bottom: var(--space-1);
+}
+
+.req-subtitle {
+  font-size: var(--font-size-sm);
+  color: var(--slate-500);
+  line-height: 1.4;
+  margin-top: 4px;
+}
+
+/* ==========================================================================
+   Main Form & Preview Grid
+   ========================================================================== */
+.req-grid {
+  display: grid;
+  grid-template-columns: 1.25fr 0.95fr;
+  gap: var(--space-8);
+  align-items: start;
+}
+
+.req-form-card {
+  background: var(--color-white);
+  border: 1.5px solid var(--slate-200);
+  border-radius: var(--radius-2xl);
+  padding: var(--space-6);
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.05);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+/* ==========================================================================
+   Form Requirement Sections
+   ========================================================================== */
+.req-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2-5);
+}
+
+.req-label-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.req-label {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  color: var(--slate-800);
+  display: flex;
+  align-items: center;
+  gap: var(--space-1-5);
+}
+
+.req-selected-val {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  color: var(--primary-600);
+  background: var(--primary-50);
+  padding: 0.15rem 0.5rem;
+  border-radius: var(--radius-sm);
+}
+
+/* ==========================================================================
+   Visual Card Selectors (Single/Shared, Food, Distance, Roommate)
+   ========================================================================== */
+/* ==========================================================================
+   College Banner on Requirements Form
+   ========================================================================== */
+.college-status-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-3) var(--space-4);
+  background: linear-gradient(135deg, rgba(37, 99, 235, 0.06) 0%, rgba(99, 102, 241, 0.04) 100%);
+  border: 1.5px solid rgba(37, 99, 235, 0.2);
+  border-radius: var(--radius-xl);
+}
+
+.college-status-left {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.college-status-icon {
+  width: 38px;
+  height: 38px;
+  border-radius: var(--radius-lg);
+  background: var(--primary-600);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.15rem;
+  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.3);
+  flex-shrink: 0;
+}
+
+.college-status-title {
+  font-size: var(--font-size-xs);
+  color: var(--slate-500);
+  font-weight: var(--font-weight-medium);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.college-status-name {
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-extrabold);
+  color: var(--slate-900);
+  line-height: 1.2;
+}
+
+.btn-change-college {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  color: var(--primary-600);
+  background: var(--color-white);
+  border: 1px solid var(--primary-200);
+  border-radius: var(--radius-full);
+  padding: 0.35rem 0.85rem;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.btn-change-college:hover {
+  background: var(--primary-50);
+  border-color: var(--primary-400);
+}
+
+/* ==========================================================================
+   Visual Card Selectors (Single/Shared, Food, Distance, Roommate)
+   ========================================================================== */
+.choice-cards-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(105px, 1fr));
+  gap: var(--space-2-5);
+}
+
+.choice-cards-row.grid-4 {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.choice-cards-row.grid-3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.choice-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: var(--space-3) var(--space-2);
+  background: var(--slate-50);
+  border: 1.5px solid var(--slate-200);
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  user-select: none;
+}
+
+.choice-card:hover {
+  background: var(--color-white);
+  border-color: var(--primary-300);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-sm);
+}
+
+.choice-card.selected {
+  background: var(--primary-50);
+  border-color: var(--primary-600);
+  box-shadow: 0 0 0 2px var(--primary-glow);
+}
+
+.choice-card.selected.danger-variant {
+  background: #fef2f2;
+  border-color: #ef4444;
+  box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.2);
+}
+
+.choice-card.selected.danger-variant .choice-title {
+  color: #dc2626;
+}
+
+.choice-card.selected.danger-variant .choice-check {
+  background: #ef4444;
+}
+
+.choice-card input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.choice-icon {
+  font-size: 1.35rem;
+  margin-bottom: var(--space-1);
+  line-height: 1;
+}
+
+.choice-title {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  color: var(--slate-800);
+  line-height: 1.2;
+}
+
+.choice-card.selected .choice-title {
+  color: var(--primary-700);
+}
+
+.choice-sub {
+  font-size: 0.725rem;
+  color: var(--slate-400);
+  margin-top: 2px;
+}
+
+.choice-card.selected .choice-sub {
+  color: var(--primary-600);
+}
+
+/* Check indicator pill on selected choice */
+.choice-check {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: var(--primary-600);
+  color: white;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  font-size: 9px;
+  font-weight: 800;
+}
+
+.choice-card.selected .choice-check {
+  display: flex;
+}
+
+/* ==========================================================================
+   Range Sliders with "Any" Toggles
+   ========================================================================== */
+.slider-control-box {
+  background: var(--slate-50);
+  border: 1px solid var(--slate-200);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  transition: all var(--transition-fast);
+}
+
+.slider-control-box.disabled {
+  background: var(--slate-100);
+  opacity: 0.7;
+}
+
+.slider-val-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.slider-big-val {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-extrabold);
+  color: var(--slate-900);
+  display: flex;
+  align-items: baseline;
+  gap: 3px;
+}
+
+.slider-big-val.dimmed {
+  color: var(--slate-400);
+}
+
+.toggle-any-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 0.3rem 0.75rem;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  border-radius: var(--radius-full);
+  border: 1.5px solid var(--slate-300);
+  background: var(--color-white);
+  color: var(--slate-600);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  user-select: none;
+}
+
+.toggle-any-pill:hover {
+  border-color: var(--primary-400);
+  color: var(--primary-600);
+}
+
+.toggle-any-pill.active {
+  background: var(--primary-600);
+  border-color: var(--primary-600);
+  color: white;
+  box-shadow: 0 2px 6px rgba(37, 99, 235, 0.25);
+}
+
+.modern-range-slider {
+  width: 100%;
+  height: 6px;
+  border-radius: var(--radius-full);
+  background: var(--slate-200);
+  outline: none;
+  -webkit-appearance: none;
+  appearance: none;
+  cursor: pointer;
+  transition: opacity var(--transition-fast);
+}
+
+.modern-range-slider:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+.modern-range-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--primary-600);
+  cursor: pointer;
+  border: 3px solid var(--color-white);
+  box-shadow: 0 2px 6px rgba(37, 99, 235, 0.4);
+  transition: transform var(--transition-fast);
+}
+
+.modern-range-slider:disabled::-webkit-slider-thumb {
+  background: var(--slate-400);
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.modern-range-slider::-webkit-slider-thumb:hover:not(:disabled) {
+  transform: scale(1.15);
+}
+
+.slider-limits-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.7rem;
+  color: var(--slate-400);
+  font-weight: var(--font-weight-medium);
+  margin-top: -4px;
+}
+
+/* ==========================================================================
+   College Input & Quick Autocomplete List
+   ========================================================================== */
+.college-input-wrapper {
+  position: relative;
+}
+
+.college-suggestions-list {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  background: var(--color-white);
+  border: 1px solid var(--slate-200);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  z-index: var(--z-dropdown);
+  max-height: 200px;
+  overflow-y: auto;
+  display: none;
+}
+
+.college-suggestions-list.active {
+  display: block;
+}
+
+.college-suggestion-item {
+  padding: 0.65rem 0.95rem;
+  font-size: var(--font-size-sm);
+  color: var(--slate-700);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  transition: background var(--transition-fast);
+}
+
+.college-suggestion-item:hover {
+  background: var(--primary-50);
+  color: var(--primary-700);
+}
+
+/* ==========================================================================
+   Submit "Find My Place" Button
+   ========================================================================== */
+.btn-find-place {
+  width: 100%;
+  padding: 1rem 1.75rem;
+  font-size: 1.1rem;
+  font-weight: var(--font-weight-extrabold);
+  border-radius: var(--radius-xl);
+  background: var(--primary-gradient);
+  color: var(--color-white);
+  box-shadow: 0 4px 16px var(--primary-glow);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2-5);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  border: none;
+  margin-top: var(--space-2);
+}
+
+.btn-find-place:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px var(--primary-glow);
+  opacity: 0.97;
+}
+
+.btn-find-place:active {
+  transform: translateY(0);
+}
+
+.btn-find-place.loading {
+  pointer-events: none;
+  opacity: 0.85;
+}
+
+/* ==========================================================================
+   Side Sticky Radius / Location Preview Card
+   ========================================================================== */
+.preview-sticky-card {
+  position: sticky;
+  top: 96px;
+  background: var(--color-white);
+  border: 1px solid var(--slate-200);
+  border-radius: var(--radius-2xl);
+  padding: var(--space-6);
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.preview-map-box {
+  height: 220px;
+  background: 
+    radial-gradient(circle at center, rgba(79, 70, 229, 0.08) 0%, transparent 70%),
+    linear-gradient(to right, rgba(226, 232, 240, 0.5) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(226, 232, 240, 0.5) 1px, transparent 1px);
+  background-size: 100% 100%, 32px 32px, 32px 32px;
+  background-color: var(--slate-50);
+  border: 1px solid var(--slate-200);
+  border-radius: var(--radius-xl);
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.preview-radar-circle {
+  position: absolute;
+  border-radius: 50%;
+  border: 2px dashed var(--primary-400);
+  background: rgba(79, 70, 229, 0.05);
+  transition: all 400ms cubic-bezier(0.34, 1.56, 0.64, 1);
+  pointer-events: none;
+}
+
+/* Radius scales based on 1km, 3km, 5km */
+.preview-radar-circle[data-radius="1"] {
+  width: 70px;
+  height: 70px;
+}
+.preview-radar-circle[data-radius="3"] {
+  width: 130px;
+  height: 130px;
+}
+.preview-radar-circle[data-radius="5"] {
+  width: 190px;
+  height: 190px;
+}
+
+.preview-college-pin {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--primary-gradient);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px var(--primary-glow);
+  z-index: 2;
+  position: relative;
+}
+
+.preview-summary-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.summary-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-size: var(--font-size-xs);
+  padding: 0.35rem 0.75rem;
+  background: var(--slate-100);
+  border-radius: var(--radius-full);
+  color: var(--slate-700);
+  font-weight: var(--font-weight-medium);
+}
+
+/* ==========================================================================
+   Responsive Adaptations
+   ========================================================================== */
+@media (max-width: 900px) {
+  .req-grid {
+    grid-template-columns: 1fr;
+  }
+  .preview-sticky-card {
+    position: static;
+    order: -1;
+  }
+  .preview-map-box {
+    height: 170px;
+  }
+}
+
+@media (max-width: 600px) {
+  .req-page-container {
+    padding: var(--space-2) var(--space-4) var(--space-12);
+  }
+  .req-form-card {
+    padding: var(--space-4);
+  }
+  .choice-cards-row {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

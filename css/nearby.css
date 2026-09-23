@@ -1,0 +1,570 @@
+/**
+ * STUDENT RELOCATION PLATFORM - NEARBY SERVICES MAP STYLES
+ * Map-first immersive command interface, floating category pill bar, and compact card popups
+ */
+
+/* ==========================================================================
+   Full Viewport Map Canvas
+   ========================================================================== */
+.nearby-viewport-shell {
+  position: relative;
+  width: 100vw;
+  height: calc(100vh - var(--nav-height));
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+@media (max-width: 600px) {
+  .nearby-viewport-shell {
+    height: calc(100vh - var(--nav-height-mobile));
+  }
+}
+
+#nearbyMap {
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+/* ==========================================================================
+   Floating Controls Header (Search + Category Pill Bar)
+   ========================================================================== */
+.floating-map-controls {
+  position: absolute;
+  top: var(--space-4);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 500;
+  width: min(960px, calc(100% - var(--space-6)));
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2-5);
+  pointer-events: none;
+}
+
+/* Floating Search Bar */
+.nearby-search-pill {
+  pointer-events: auto;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--slate-300);
+  border-radius: var(--radius-full);
+  padding: 0.5rem 1.25rem;
+  box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.12), 0 4px 10px -2px rgba(15, 23, 42, 0.04);
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  transition: all var(--transition-fast);
+}
+
+.nearby-search-pill:focus-within {
+  border-color: var(--primary-500);
+  box-shadow: 0 12px 30px -4px rgba(79, 70, 229, 0.2), 0 0 0 3px var(--primary-glow);
+  background: var(--color-white);
+}
+
+.nearby-search-icon {
+  color: var(--primary-600);
+  display: flex;
+  align-items: center;
+}
+
+.nearby-search-input {
+  width: 100%;
+  border: none;
+  background: transparent;
+  outline: none;
+  font-family: var(--font-family-sans);
+  font-size: var(--font-size-sm);
+  color: var(--slate-800);
+}
+
+.nearby-search-input::placeholder {
+  color: var(--slate-400);
+}
+
+.nearby-clear-btn {
+  background: transparent;
+  border: none;
+  color: var(--slate-400);
+  cursor: pointer;
+  display: none;
+  align-items: center;
+  padding: 2px;
+}
+
+.nearby-clear-btn:hover {
+  color: var(--slate-700);
+}
+
+/* Category Pill Selector Bar */
+.category-pill-bar {
+  pointer-events: auto;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  overflow-x: auto;
+  scrollbar-width: none;
+  padding: var(--space-1) var(--space-2);
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--slate-200);
+  border-radius: var(--radius-full);
+  box-shadow: var(--shadow-md);
+}
+
+.category-pill-bar::-webkit-scrollbar {
+  display: none;
+}
+
+.cat-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1-5);
+  padding: 0.4rem 0.95rem;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  color: var(--slate-600);
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all var(--transition-fast);
+  user-select: none;
+}
+
+.cat-btn:hover {
+  background: var(--slate-100);
+  color: var(--slate-900);
+}
+
+.cat-btn.active {
+  background: var(--primary-600);
+  color: var(--color-white);
+  box-shadow: 0 2px 8px var(--primary-glow);
+}
+
+/* ==========================================================================
+   Campus Center Floating Indicator Badge
+   ========================================================================== */
+.floating-campus-badge {
+  position: absolute;
+  bottom: var(--space-6);
+  left: var(--space-6);
+  z-index: 500;
+  background: rgba(255, 255, 255, 0.96);
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--slate-200);
+  border-radius: var(--radius-full);
+  padding: 0.45rem 1.15rem;
+  box-shadow: var(--shadow-lg);
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  color: var(--slate-800);
+  transition: transform var(--transition-fast);
+}
+
+.floating-campus-badge:hover {
+  transform: translateY(-2px);
+}
+
+/* ==========================================================================
+   Compact Service Card (Shown on marker click)
+   Strictly: Name · Distance · Open/Closed
+   ========================================================================== */
+.service-popup-card {
+  min-width: 210px;
+  max-width: 260px;
+  background: var(--color-white);
+  padding: var(--space-3) var(--space-4);
+}
+
+.service-popup-title {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-extrabold);
+  color: var(--slate-900);
+  line-height: 1.25;
+  margin-bottom: var(--space-1-5);
+}
+
+.service-popup-meta-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  font-size: var(--font-size-xs);
+  border-top: 1px solid var(--slate-100);
+  padding-top: var(--space-2);
+}
+
+.service-popup-distance {
+  font-weight: var(--font-weight-bold);
+  color: var(--primary-700);
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.service-status-pill {
+  font-size: 0.7rem;
+  font-weight: var(--font-weight-semibold);
+  padding: 0.15rem 0.5rem;
+  border-radius: var(--radius-full);
+}
+
+.status-open {
+  background: var(--success-50);
+  color: var(--success-700);
+}
+
+.status-closed {
+  background: var(--slate-100);
+  color: var(--slate-500);
+}
+
+/* ==========================================================================
+   Map Markers Styling with Floating Distance Badge
+   ========================================================================== */
+.service-map-pin {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  transition: transform var(--transition-bounce);
+}
+
+.service-map-pin:hover {
+  transform: scale(1.18);
+  z-index: 1000 !important;
+}
+
+.pin-bubble {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.3);
+  border: 2px solid white;
+}
+
+.pin-distance-tag {
+  background: rgba(15, 23, 42, 0.88);
+  color: white;
+  font-size: 0.65rem;
+  font-weight: var(--font-weight-bold);
+  padding: 1px 6px;
+  border-radius: var(--radius-full);
+  margin-top: -6px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  white-space: nowrap;
+}
+
+/* Category Colors */
+.pin-cat-food { background: #ea580c; }
+.pin-cat-grocery { background: #059669; }
+.pin-cat-pharmacy { background: #e11d48; }
+.pin-cat-stationery { background: #4f46e5; }
+.pin-cat-atm { background: #0284c7; }
+.pin-cat-laundry { background: #7c3aed; }
+.pin-cat-transport { background: #0d9488; }
+
+/* College Center Beacon */
+.college-center-pin {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: var(--primary-gradient);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 24px var(--primary-glow);
+  border: 3px solid white;
+  cursor: pointer;
+  z-index: 999 !important;
+}
+
+/* ==========================================================================
+   Responsive Adaptations
+   ========================================================================== */
+@media (max-width: 768px) {
+  .floating-map-controls {
+    width: calc(100% - var(--space-4));
+    top: var(--space-2);
+  }
+  .category-pill-bar {
+    padding: var(--space-1);
+    gap: var(--space-1);
+  }
+  .cat-btn {
+    padding: 0.35rem 0.75rem;
+    font-size: 0.75rem;
+  }
+  .floating-campus-badge {
+    bottom: var(--space-4);
+    left: var(--space-4);
+    font-size: 0.7rem;
+    padding: 0.35rem 0.85rem;
+  }
+}
+
+/* ==========================================================================
+   Category Landing & List View Styles (Category -> List -> Optional Map)
+   ========================================================================== */
+.nearby-landing-shell {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: var(--space-4) var(--space-6) var(--space-16);
+}
+
+.nearby-header-section {
+  margin-bottom: var(--space-6);
+}
+
+.nearby-title {
+  font-size: clamp(1.65rem, 3vw, 2.25rem);
+  font-weight: var(--font-weight-extrabold);
+  letter-spacing: -0.03em;
+  color: var(--slate-900);
+  line-height: 1.2;
+}
+
+.nearby-subtitle {
+  font-size: var(--font-size-sm);
+  color: var(--slate-500);
+  line-height: 1.4;
+  margin-top: 4px;
+}
+
+.nearby-categories-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: var(--space-4);
+}
+
+.nearby-category-card {
+  background: var(--color-white);
+  border: 1.5px solid var(--slate-200);
+  border-radius: var(--radius-2xl);
+  padding: var(--space-5);
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  box-shadow: var(--shadow-xs);
+  user-select: none;
+}
+
+.nearby-category-card:hover {
+  border-color: var(--primary-400);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.nearby-cat-icon-wrapper {
+  width: 50px;
+  height: 50px;
+  border-radius: var(--radius-lg);
+  background: var(--slate-100);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  flex-shrink: 0;
+  transition: transform var(--transition-fast);
+}
+
+.nearby-category-card:hover .nearby-cat-icon-wrapper {
+  transform: scale(1.08);
+}
+
+.nearby-cat-label {
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-bold);
+  color: var(--slate-900);
+  margin-bottom: 2px;
+}
+
+.nearby-cat-action {
+  font-size: var(--font-size-xs);
+  color: var(--primary-600);
+  font-weight: var(--font-weight-semibold);
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+
+/* Category Service List View */
+.nearby-list-shell {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: var(--space-6) var(--space-4) var(--space-12);
+}
+
+.nearby-top-nav-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin-bottom: var(--space-5);
+}
+
+.nearby-services-column {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.nearby-service-row-card {
+  background: var(--color-white);
+  border: 1.5px solid var(--slate-200);
+  border-radius: var(--radius-xl);
+  padding: var(--space-4) var(--space-5);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  box-shadow: var(--shadow-xs);
+  transition: all var(--transition-fast);
+}
+
+.nearby-service-row-card:hover {
+  border-color: var(--primary-300);
+  box-shadow: var(--shadow-sm);
+}
+
+.nearby-service-info {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.nearby-service-name {
+  font-size: 1.05rem;
+  font-weight: var(--font-weight-bold);
+  color: var(--slate-900);
+}
+
+.nearby-service-meta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--font-size-xs);
+  color: var(--slate-500);
+}
+
+.nearby-service-dist {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  font-weight: var(--font-weight-semibold);
+  color: var(--primary-700);
+}
+
+.nearby-map-view-shell {
+  position: relative;
+  width: 100%;
+  height: calc(100vh - var(--nav-height));
+  display: flex;
+  flex-direction: column;
+}
+
+.nearby-map-top-bar {
+  position: absolute;
+  top: var(--space-4);
+  left: var(--space-4);
+  right: var(--space-4);
+  z-index: 500;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  pointer-events: none;
+}
+
+.nearby-map-top-bar > * {
+  pointer-events: auto;
+}
+
+/* ==========================================================================
+   Vendor Details Modal
+   ========================================================================== */
+.vendor-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(4px);
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-4);
+}
+
+.vendor-modal-card {
+  background: var(--color-white);
+  border-radius: var(--radius-2xl);
+  max-width: 500px;
+  width: 100%;
+  padding: var(--space-6);
+  box-shadow: 0 20px 40px -15px rgba(15, 23, 42, 0.25);
+  border: 1px solid var(--slate-200);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.vendor-modal-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.vendor-modal-title {
+  font-size: 1.35rem;
+  font-weight: var(--font-weight-extrabold);
+  color: var(--slate-900);
+  margin: 0;
+  line-height: 1.25;
+}
+
+.vendor-modal-details-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-3);
+  background: var(--slate-50);
+  padding: var(--space-4);
+  border-radius: var(--radius-xl);
+}
+
+.vendor-detail-item {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.vendor-detail-label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--slate-400);
+  font-weight: var(--font-weight-bold);
+}
+
+.vendor-detail-value {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  color: var(--slate-800);
+}

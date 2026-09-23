@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Relocation Platform | UI Design System & Foundation</title>
+  <meta name="description" content="A clean, modern, and minimal design system for the student relocation platform. Reusable components, design tokens, and global layout foundation.">
+  
+  <!-- Design System Stylesheets -->
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/layout.css">
+
+  <style>
+    /* Showcase-specific layout refinements */
+    .showcase-header {
+      background: var(--surface-card);
+      border-bottom: 1px solid var(--slate-200);
+      padding: var(--space-12) 0 var(--space-8);
+      margin-bottom: var(--space-8);
+    }
+    .token-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+      gap: var(--space-3);
+    }
+    .color-swatch {
+      background: var(--surface-card);
+      border: 1px solid var(--slate-200);
+      border-radius: var(--radius-lg);
+      padding: var(--space-2-5);
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      position: relative;
+    }
+    .color-swatch:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+      border-color: var(--primary-300);
+    }
+    .swatch-color-box {
+      height: 48px;
+      border-radius: var(--radius-md);
+      margin-bottom: var(--space-2);
+      border: 1px solid rgba(0,0,0,0.05);
+    }
+    .swatch-name {
+      font-size: var(--font-size-xs);
+      font-weight: var(--font-weight-semibold);
+      color: var(--slate-800);
+    }
+    .swatch-hex {
+      font-size: 0.7rem;
+      font-family: var(--font-family-mono);
+      color: var(--slate-400);
+    }
+    .demo-block {
+      background: var(--surface-card);
+      border: 1px solid var(--slate-200);
+      border-radius: var(--radius-xl);
+      padding: var(--space-6);
+      box-shadow: var(--shadow-xs);
+      margin-bottom: var(--space-8);
+    }
+    .demo-title {
+      font-size: var(--font-size-lg);
+      font-weight: var(--font-weight-bold);
+      margin-bottom: var(--space-1);
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+    }
+    .demo-desc {
+      font-size: var(--font-size-sm);
+      color: var(--slate-500);
+      margin-bottom: var(--space-5);
+    }
+    .preview-canvas {
+      background: var(--slate-50);
+      border: 1px dashed var(--slate-200);
+      border-radius: var(--radius-lg);
+      padding: var(--space-6);
+    }
+    .component-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: var(--space-3);
+    }
+  </style>
+</head>
+<body class="app-shell">
+
+  <!-- ========================================================================
+       GLOBAL HEADER / NAVBAR
+       Consistent, responsive, sticky header for the platform
+       ======================================================================== -->
+  <header class="site-header" id="globalHeader">
+    <div class="container header-container">
+      
+      <!-- Brand Identity -->
+      <a href="index.html" class="brand" aria-label="Pluto Home">
+        <div class="brand-icon-wrapper">
+          <!-- Graduation Cap + Compass icon -->
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
+            <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
+          </svg>
+        </div>
+        <div class="brand-text">
+          <span class="brand-title">Pluto</span>
+          <span class="brand-tag">Your World Away From Home.</span>
+        </div>
+      </a>
+
+      <!-- Desktop Navigation Menu -->
+      <nav class="desktop-nav" aria-label="Main Navigation">
+        <a href="#overview" class="nav-link active">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+          Overview
+        </a>
+        <a href="#tokens" class="nav-link">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="m4.93 4.93 4.24 4.24"></path><path d="m14.83 9.17 4.24-4.24"></path><path d="m14.83 14.83 4.24 4.24"></path><path d="m9.17 14.83-4.24 4.24"></path></svg>
+          Tokens
+        </a>
+        <a href="#buttons" class="nav-link">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"></rect><path d="M9 12h6"></path><path d="M12 9v6"></path></svg>
+          Components
+        </a>
+        <a href="#cards" class="nav-link">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="5" rx="2"></rect><line x1="2" x2="22" y1="10" y2="10"></line></svg>
+          Cards
+        </a>
+        <a href="#forms" class="nav-link">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+          Forms
+        </a>
+      </nav>
+
+      <!-- Header Actions (Search, Notification, Profile, Hamburger) -->
+      <div class="header-actions">
+        <!-- Quick Search Pill -->
+        <div class="header-search">
+          <div class="search-pill" onclick="document.getElementById('globalSearchInput').focus()">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" x2="16.65" y1="21" y2="16.65"></line></svg>
+            <input type="text" id="globalSearchInput" placeholder="Quick search..." aria-label="Search">
+            <span class="input-kbd">⌘K</span>
+          </div>
+        </div>
+
+        <!-- Notification Trigger -->
+        <button class="btn-icon notification-btn" id="headerNotifBtn" title="Notifications" aria-label="Notifications" onclick="window.showToast({title: 'Campus Alert', message: 'University housing portal opens tomorrow at 9:00 AM.', type: 'info'})">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"></path><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"></path></svg>
+          <span class="notification-badge"></span>
+        </button>
+
+        <!-- Student Profile Avatar -->
+        <div class="avatar" title="Alex Rivera (Incoming Freshman)">
+          AR
+          <span class="avatar-status-dot" title="Active"></span>
+        </div>
+
+        <!-- Mobile Drawer Hamburger Toggle -->
+        <button class="btn-icon mobile-toggle-btn" id="mobileToggleBtn" aria-label="Open mobile menu">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="12" y2="12"></line><line x1="4" x2="20" y1="6" y2="6"></line><line x1="4" x2="20" y1="18" y2="18"></line></svg>
+        </button>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- ========================================================================
+       MOBILE NAVIGATION DRAWER
+       Sliding drawer for smaller devices and tablets
+       ======================================================================== -->
+  <div class="drawer-backdrop" id="drawerBackdrop">
+    <aside class="mobile-drawer" id="mobileDrawer">
+      <div class="drawer-header">
+        <div class="brand">
+          <div class="brand-icon-wrapper" style="width: 32px; height: 32px;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
+              <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
+            </svg>
+          </div>
+          <span class="brand-title" style="font-size: 1rem;">RelocMate</span>
+        </div>
+        <button class="btn-icon btn-icon-sm" id="closeDrawerBtn" aria-label="Close drawer">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+
+      <div class="drawer-content">
+        <!-- Student Quick Card -->
+        <div style="display: flex; align-items: center; gap: var(--space-3); padding: var(--space-3); background: var(--slate-100); border-radius: var(--radius-lg);">
+          <div class="avatar">AR<span class="avatar-status-dot"></span></div>
+          <div>
+            <div style="font-size: var(--font-size-sm); font-weight: var(--font-weight-bold); color: var(--slate-900);">Alex Rivera</div>
+            <div style="font-size: var(--font-size-xs); color: var(--slate-500);">Fall 2026 Relocation</div>
+          </div>
+        </div>
+
+        <ul class="drawer-nav-list">
+          <li>
+            <a href="#overview" class="drawer-nav-item active" onclick="closeDrawer()">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path></svg>
+              Overview
+            </a>
+          </li>
+          <li>
+            <a href="#tokens" class="drawer-nav-item" onclick="closeDrawer()">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="m4.93 4.93 4.24 4.24"></path></svg>
+              Color Tokens
+            </a>
+          </li>
+          <li>
+            <a href="#buttons" class="drawer-nav-item" onclick="closeDrawer()">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="18" x="3" y="3" rx="2"></rect></svg>
+              UI Components
+            </a>
+          </li>
+          <li>
+            <a href="#cards" class="drawer-nav-item" onclick="closeDrawer()">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="20" height="14" x="2" y="5" rx="2"></rect></svg>
+              Card Layouts
+            </a>
+          </li>
+          <li>
+            <a href="#forms" class="drawer-nav-item" onclick="closeDrawer()">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path></svg>
+              Form Controls
+            </a>
+          </li>
+        </ul>
+
+        <div style="margin-top: auto;">
+          <button class="btn btn-primary" style="width: 100%;" onclick="openModal('checklistModal'); closeDrawer();">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
+            Open Relocation Checklist
+          </button>
+        </div>
+      </div>
+
+      <div class="drawer-footer">
+        <div class="system-status" style="width: 100%; justify-content: center;">
+          <span class="status-pulse"></span>
+          <span>System Healthy • v1.0.0</span>
+        </div>
+      </div>
+    </aside>
+  </div>
+
+  <!-- ========================================================================
+       MAIN APP SHELL
+       Hero introduction and living design system component showcase
+       ======================================================================== -->
+  <main class="main-content" id="overview">
+    
+    <!-- Hero / Design System Intro -->
+    <section class="showcase-header">
+      <div class="container">
+        
+        <div class="breadcrumbs-bar">
+          <a href="#">Design System</a>
+          <span class="breadcrumbs-separator">/</span>
+          <span style="color: var(--slate-800); font-weight: var(--font-weight-semibold);">Living Styleguide</span>
+          <span class="badge badge-primary" style="margin-left: var(--space-2);">v1.0 Ready</span>
+        </div>
+
+        <div style="max-width: 820px;">
+          <h1 class="text-display" style="margin-bottom: var(--space-3);">
+            Student Relocation <span class="text-primary-gradient">Design System</span>
+          </h1>
+          <p class="text-lead" style="margin-bottom: var(--space-6);">
+            Clean, modern, and minimal design foundation crafted specifically for students moving to university. Built with a crisp light palette, one strong primary accent (<span style="color: var(--primary-600); font-weight: 700;">#4F46E5 Indigo</span>), rounded cards, subtle shadows, and friendly typography.
+          </p>
+
+          <div class="component-row" style="margin-bottom: var(--space-6);">
+            <button class="btn btn-gradient btn-lg" onclick="openModal('checklistModal')">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m18 15-6-6-6 6"/></svg>
+              Preview Modal Dialog
+            </button>
+
+            <button class="btn btn-secondary btn-lg" onclick="window.showToast({ title: 'Welcome to RelocMate', message: 'Reusable design system initialized successfully.', type: 'success' })">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+              Trigger Live Toast
+            </button>
+
+            <button class="btn btn-outline btn-lg" onclick="openDrawer()">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="12" y2="12"></line><line x1="4" x2="20" y1="6" y2="6"></line><line x1="4" x2="20" y1="18" y2="18"></line></svg>
+              Test Mobile Drawer
+            </button>
+          </div>
+
+          <!-- Feature badges -->
+          <div class="component-row">
+            <span class="badge badge-success"><span class="badge-dot"></span> Light Theme Default</span>
+            <span class="badge badge-primary"><span class="badge-dot"></span> Primary Indigo Anchor</span>
+            <span class="badge badge-info"><span class="badge-dot"></span> Plus Jakarta Sans</span>
+            <span class="badge badge-neutral"><span class="badge-dot"></span> Fully Responsive</span>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <div class="container">
+
+      <!-- ====================================================================
+           SECTION 1: COLOR PALETTE & DESIGN TOKENS
+           ==================================================================== -->
+      <section class="demo-block" id="tokens">
+        <div class="demo-title">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--primary-600)" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="m4.93 4.93 4.24 4.24"></path><path d="m14.83 9.17 4.24-4.24"></path></svg>
+          Color System & Tokens
+        </div>
+        <p class="demo-desc">
+          Click any color swatch to copy its CSS token variable to your clipboard.
+        </p>
+
+        <!-- Primary Accent Scale -->
+        <h4 style="margin-bottom: var(--space-3); color: var(--slate-800);">Primary Accent: Indigo (Strong Brand Core)</h4>
+        <div class="token-grid" style="margin-bottom: var(--space-6);">
+          <div class="color-swatch" data-copy-token="var(--primary-50)">
+            <div class="swatch-color-box" style="background: var(--primary-50);"></div>
+            <div class="swatch-name">Primary 50</div>
+            <div class="swatch-hex">#EEF2FF</div>
+          </div>
+          <div class="color-swatch" data-copy-token="var(--primary-100)">
+            <div class="swatch-color-box" style="background: var(--primary-100);"></div>
+            <div class="swatch-name">Primary 100</div>
+            <div class="swatch-hex">#E0E7FF</div>
+          </div>
+          <div class="color-swatch" data-copy-token="var(--primary-200)">
+            <div class="swatch-color-box" style="background: var(--primary-200);"></div>
+            <div class="swatch-name">Primary 200</div>
+            <div class="swatch-hex">#C7D2FE</div>
+          </div>
+          <div class="color-swatch" data-copy-token="var(--primary-400)">
+            <div class="swatch-color-box" style="background: var(--primary-400);"></div>
+            <div class="swatch-name">Primary 400</div>
+            <div class="swatch-hex">#818CF8</div>
+          </div>
+          <div class="color-swatch" data-copy-token="var(--primary-600)">
+            <div class="swatch-color-box" style="background: var(--primary-600);"></div>
+            <div class="swatch-name">Primary 600 <span class="badge badge-primary" style="font-size: 0.6rem; padding: 2px 4px;">Main</span></div>
+            <div class="swatch-hex">#4F46E5</div>
+          </div>
+          <div class="color-swatch" data-copy-token="var(--primary-700)">
+            <div class="swatch-color-box" style="background: var(--primary-700);"></div>
+            <div class="swatch-name">Primary 700</div>
+            <div class="swatch-hex">#4338CA</div>
+          </div>
+          <div class="color-swatch" data-copy-token="var(--primary-900)">
+            <div class="swatch-color-box" style="background: var(--primary-900);"></div>
+            <div class="swatch-name">Primary 900</div>
+            <div class="swatch-hex">#312E81</div>
+          </div>
+        </div>
+
+        <!-- Slate Neutrals -->
+        <h4 style="margin-bottom: var(--space-3); color: var(--slate-800);">Slate Neutrals (Clean Contrast & Light Surfaces)</h4>
+        <div class="token-grid" style="margin-bottom: var(--space-6);">
+          <div class="color-swatch" data-copy-token="var(--slate-50)">
+            <div class="swatch-color-box" style="background: var(--slate-50); border: 1px solid var(--slate-200);"></div>
+            <div class="swatch-name">Slate 50 (App Bg)</div>
+            <div class="swatch-hex">#F8FAFC</div>
+          </div>
+          <div class="color-swatch" data-copy-token="var(--color-white)">
+            <div class="swatch-color-box" style="background: #ffffff; border: 1px solid var(--slate-200);"></div>
+            <div class="swatch-name">White (Cards)</div>
+            <div class="swatch-hex">#FFFFFF</div>
+          </div>
+          <div class="color-swatch" data-copy-token="var(--slate-100)">
+            <div class="swatch-color-box" style="background: var(--slate-100);"></div>
+            <div class="swatch-name">Slate 100</div>
+            <div class="swatch-hex">#F1F5F9</div>
+          </div>
+          <div class="color-swatch" data-copy-token="var(--slate-200)">
+            <div class="swatch-color-box" style="background: var(--slate-200);"></div>
+            <div class="swatch-name">Slate 200 (Borders)</div>
+            <div class="swatch-hex">#E2E8F0</div>
+          </div>
+          <div class="color-swatch" data-copy-token="var(--slate-500)">
+            <div class="swatch-color-box" style="background: var(--slate-500);"></div>
+            <div class="swatch-name">Slate 500 (Muted)</div>
+            <div class="swatch-hex">#64748B</div>
+          </div>
+          <div class="color-swatch" data-copy-token="var(--slate-800)">
+            <div class="swatch-color-box" style="background: var(--slate-800);"></div>
+            <div class="swatch-name">Slate 800 (Headers)</div>
+            <div class="swatch-hex">#1E293B</div>
+          </div>
+          <div class="color-swatch" data-copy-token="var(--slate-900)">
+            <div class="swatch-color-box" style="background: var(--slate-900);"></div>
+            <div class="swatch-name">Slate 900 (Deep)</div>
+            <div class="swatch-hex">#0F172A</div>
+          </div>
+        </div>
+
+        <!-- Semantic Colors -->
+        <h4 style="margin-bottom: var(--space-3); color: var(--slate-800);">Student Categorical & Semantic Accents</h4>
+        <div class="token-grid">
+          <div class="color-swatch" data-copy-token="var(--success-500)">
+            <div class="swatch-color-box" style="background: var(--success-500);"></div>
+            <div class="swatch-name">Verified / Budget</div>
+            <div class="swatch-hex">#10B981 Emerald</div>
+          </div>
+          <div class="color-swatch" data-copy-token="var(--warning-500)">
+            <div class="swatch-color-box" style="background: var(--warning-500);"></div>
+            <div class="swatch-name">Alert / Deadline</div>
+            <div class="swatch-hex">#F59E0B Amber</div>
+          </div>
+          <div class="color-swatch" data-copy-token="var(--danger-500)">
+            <div class="swatch-color-box" style="background: var(--danger-500);"></div>
+            <div class="swatch-name">Urgent / Required</div>
+            <div class="swatch-hex">#F43F5E Rose</div>
+          </div>
+          <div class="color-swatch" data-copy-token="var(--info-500)">
+            <div class="swatch-color-box" style="background: var(--info-500);"></div>
+            <div class="swatch-name">Campus / Transit</div>
+            <div class="swatch-hex">#0EA5E9 Sky</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ====================================================================
+           SECTION 2: TYPOGRAPHY HIERARCHY
+           ==================================================================== -->
+      <section class="demo-block">
+        <div class="demo-title">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--primary-600)" stroke-width="2"><polyline points="4 7 4 4 20 4 20 7"></polyline><line x1="9" x2="15" y1="20" y2="20"></line><line x1="12" x2="12" y1="4" y2="20"></line></svg>
+          Typography Scale (Plus Jakarta Sans)
+        </div>
+        <p class="demo-desc">
+          Modern geometric sans-serif tuned for readability, high-energy student appeal, and clean UI density.
+        </p>
+
+        <div class="preview-canvas" style="display: flex; flex-direction: column; gap: var(--space-4);">
+          <div style="border-bottom: 1px solid var(--slate-200); padding-bottom: var(--space-3);">
+            <div class="text-caption">Display (48px / Bold 800)</div>
+            <div class="text-display">Find Your Student Home</div>
+          </div>
+          <div style="border-bottom: 1px solid var(--slate-200); padding-bottom: var(--space-3);">
+            <div class="text-caption">Heading 1 (36px / Bold 800)</div>
+            <h1>Campus Neighborhood Guide</h1>
+          </div>
+          <div style="border-bottom: 1px solid var(--slate-200); padding-bottom: var(--space-3);">
+            <div class="text-caption">Heading 2 (28px / Bold 700)</div>
+            <h2>Relocation Checklist & Deadlines</h2>
+          </div>
+          <div style="border-bottom: 1px solid var(--slate-200); padding-bottom: var(--space-3);">
+            <div class="text-caption">Heading 3 (22px / Bold 700)</div>
+            <h3>Verified Student Apartments</h3>
+          </div>
+          <div style="border-bottom: 1px solid var(--slate-200); padding-bottom: var(--space-3);">
+            <div class="text-caption">Body Lead (18px / Regular 400)</div>
+            <p class="text-lead">Everything you need to move to your new university city without stress, hidden fees, or scam landlords.</p>
+          </div>
+          <div>
+            <div class="text-caption">Body Default & Secondary (16px & 14px)</div>
+            <p class="text-body" style="margin-bottom: var(--space-1);">Standard body font for guides, dorm details, and reviews.</p>
+            <p class="text-muted">Muted secondary annotation text for timestamps and sub-labels.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ====================================================================
+           SECTION 3: BUTTONS & INTERACTION STATES
+           ==================================================================== -->
+      <section class="demo-block" id="buttons">
+        <div class="demo-title">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--primary-600)" stroke-width="2"><rect width="18" height="18" x="3" y="3" rx="2"></rect><path d="M9 12h6"></path><path d="M12 9v6"></path></svg>
+          Buttons & Actions
+        </div>
+        <p class="demo-desc">
+          Consistent button variants with smooth micro-interactions, distinct hierarchy, and friendly touch ergonomics.
+        </p>
+
+        <div class="preview-canvas">
+          <h5 style="margin-bottom: var(--space-3); color: var(--slate-700);">Variants</h5>
+          <div class="component-row" style="margin-bottom: var(--space-6);">
+            <button class="btn btn-primary">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+              Primary Button
+            </button>
+            <button class="btn btn-gradient">Gradient Accent</button>
+            <button class="btn btn-secondary">Secondary Soft</button>
+            <button class="btn btn-outline">Outline Slate</button>
+            <button class="btn btn-ghost">Ghost Link</button>
+            <button class="btn btn-danger">Destructive</button>
+            <button class="btn btn-primary" disabled>Disabled</button>
+          </div>
+
+          <h5 style="margin-bottom: var(--space-3); color: var(--slate-700);">Sizes & Icon Triggers</h5>
+          <div class="component-row">
+            <button class="btn btn-primary btn-sm">Small (sm)</button>
+            <button class="btn btn-primary btn-md">Medium (md)</button>
+            <button class="btn btn-primary btn-lg">Large (lg)</button>
+            <button class="btn-icon" title="Save Favorite" aria-label="Favorite">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path></svg>
+            </button>
+            <button class="btn-icon" title="Share" aria-label="Share">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" x2="15.42" y1="13.51" y2="17.49"></line><line x1="15.41" x2="8.59" y1="6.51" y2="10.49"></line></svg>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ====================================================================
+           SECTION 4: ROUNDED CARDS & PANELS
+           ==================================================================== -->
+      <section class="demo-block" id="cards">
+        <div class="demo-title">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--primary-600)" stroke-width="2"><rect width="20" height="14" x="2" y="5" rx="2"></rect><line x1="2" x2="22" y1="10" y2="10"></line></svg>
+          Rounded Cards & Metric Displays
+        </div>
+        <p class="demo-desc">
+          Card foundations featuring 16px to 20px smooth border-radii, multi-layered subtle shadows, and interactive hover lifts.
+        </p>
+
+        <!-- Metric Stat Cards Grid -->
+        <h5 style="margin-bottom: var(--space-3); color: var(--slate-700);">Metric & Stat Cards</h5>
+        <div class="grid grid-cols-4 gap-4" style="margin-bottom: var(--space-8);">
+          
+          <div class="card card-stat card-interactive">
+            <div class="card-stat-icon-wrapper">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path></svg>
+            </div>
+            <div>
+              <div class="card-stat-value">$680<span style="font-size: 1rem; font-weight: 500; color: var(--slate-400);">/mo</span></div>
+              <div class="card-stat-label">Average Student Rent</div>
+            </div>
+          </div>
+
+          <div class="card card-stat card-interactive">
+            <div class="card-stat-icon-wrapper" style="background: var(--success-50); color: var(--success-600);">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+            </div>
+            <div>
+              <div class="card-stat-value">100%</div>
+              <div class="card-stat-label">Verified Listings</div>
+            </div>
+          </div>
+
+          <div class="card card-stat card-interactive">
+            <div class="card-stat-icon-wrapper" style="background: var(--info-50); color: var(--info-600);">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+            </div>
+            <div>
+              <div class="card-stat-value">8 mins</div>
+              <div class="card-stat-label">Avg. Walk to Campus</div>
+            </div>
+          </div>
+
+          <div class="card card-stat card-interactive">
+            <div class="card-stat-icon-wrapper" style="background: var(--warning-50); color: var(--warning-600);">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
+            </div>
+            <div>
+              <div class="card-stat-value">24 Tasks</div>
+              <div class="card-stat-label">Pre-Arrival Checklist</div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Featured Listing & Info Cards -->
+        <h5 style="margin-bottom: var(--space-3); color: var(--slate-700);">Interactive Listing & Informational Cards</h5>
+        <div class="grid grid-cols-2 gap-6">
+          
+          <!-- Sample Relocation Card Template -->
+          <div class="card card-interactive">
+            <!-- Simulated image header with tags -->
+            <div style="height: 160px; background: linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 100%); border-radius: var(--radius-lg); margin-bottom: var(--space-4); position: relative; padding: var(--space-3); display: flex; align-items: flex-start; justify-content: space-between;">
+              <span class="badge badge-success"><span class="badge-dot"></span> Campus Verified</span>
+              <button class="btn-icon btn-icon-sm" style="background: rgba(255,255,255,0.85); backdrop-filter: blur(4px);" title="Save">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path></svg>
+              </button>
+            </div>
+
+            <div class="card-body">
+              <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: var(--space-2);">
+                <h4 style="color: var(--slate-900);">Northgate Student Lofts</h4>
+                <div style="font-weight: 700; color: var(--primary-600); font-size: 1.1rem;">$725<span style="font-size: 0.8rem; font-weight: 400; color: var(--slate-500);">/mo</span></div>
+              </div>
+
+              <p class="text-muted" style="margin-bottom: var(--space-4);">
+                Furnished private studio • 5-min shuttle to Science Quad • Utilities & High-Speed WiFi included.
+              </p>
+
+              <div class="component-row" style="margin-bottom: var(--space-4);">
+                <span class="badge badge-neutral">Private Bath</span>
+                <span class="badge badge-neutral">Furnished</span>
+                <span class="badge badge-info">Near Transit</span>
+              </div>
+            </div>
+
+            <div class="card-footer">
+              <span style="font-size: var(--font-size-xs); color: var(--slate-500); display: flex; align-items: center; gap: 4px;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                0.4 miles from University Library
+              </span>
+              <button class="btn btn-secondary btn-sm" onclick="window.showToast({title: 'Apartment Saved', message: 'Added to your favorites list.', type: 'primary'})">
+                View Details
+              </button>
+            </div>
+          </div>
+
+          <!-- Informational / Onboarding Callout Card -->
+          <div class="card card-featured" style="background: var(--surface-accent); border-color: var(--primary-200);">
+            <div class="card-body">
+              <div style="width: 44px; height: 44px; border-radius: var(--radius-md); background: var(--primary-600); color: white; display: flex; align-items: center; justify-content: center; margin-bottom: var(--space-4);">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"></path><polyline points="10 2 10 10 13 7 16 10 16 2"></polyline></svg>
+              </div>
+
+              <h3 style="margin-bottom: var(--space-2); color: var(--slate-900);">First-Time Student Relocation Guide</h3>
+              <p class="text-body" style="margin-bottom: var(--space-4);">
+                Moving to college shouldn't be chaotic. Our step-by-step checklist organizes lease signing, utilities, dorm essentials, and roommates in one place.
+              </p>
+
+              <div class="alert alert-primary" style="margin-bottom: var(--space-6);">
+                <div class="alert-icon">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+                </div>
+                <div>
+                  <strong>Pro-tip for freshmen:</strong> Dorm registration priority closes this Friday. Complete your roommate profile first.
+                </div>
+              </div>
+
+              <button class="btn btn-primary" onclick="openModal('checklistModal')">
+                Launch Relocation Checklist
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ====================================================================
+           SECTION 5: FORMS, INPUTS & TABS
+           ==================================================================== -->
+      <section class="demo-block" id="forms">
+        <div class="demo-title">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--primary-600)" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path></svg>
+          Form Controls, Search & Tabs
+        </div>
+        <p class="demo-desc">
+          Clean input controls with high-contrast borders, focus rings with primary accent glow, and segmented tabs.
+        </p>
+
+        <!-- Segmented Control / Tabs Preview -->
+        <div class="tabs-wrapper" style="margin-bottom: var(--space-6);">
+          <div class="tabs-pills" data-tabs>
+            <button class="tab-btn active" data-tab-target="tab-all">All Listings</button>
+            <button class="tab-btn" data-tab-target="tab-dorms">On-Campus Dorms</button>
+            <button class="tab-btn" data-tab-target="tab-apartments">Off-Campus Flats</button>
+            <button class="tab-btn" data-tab-target="tab-roommates">Roommates Needed</button>
+          </div>
+        </div>
+
+        <div class="preview-canvas">
+          <div class="grid grid-cols-2 gap-6">
+            
+            <div>
+              <div class="form-group">
+                <label class="form-label" for="sampleCampusInput">
+                  Target University or Campus <span class="required">*</span>
+                </label>
+                <div class="input-icon-group">
+                  <div class="input-icon-left">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path></svg>
+                  </div>
+                  <input type="text" id="sampleCampusInput" class="form-input" placeholder="e.g. University of California, Berkeley">
+                </div>
+                <div class="form-hint">We'll show housing within a 5-mile radius.</div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="sampleBudgetSelect">Monthly Budget Range</label>
+                <select id="sampleBudgetSelect" class="form-select">
+                  <option selected>Under $700 / month (Budget Friendly)</option>
+                  <option>$700 - $1,100 / month (Standard Shared)</option>
+                  <option>$1,100 - $1,600 / month (Private Studio)</option>
+                  <option>$1,600+ / month (Luxury Student Living)</option>
+                </select>
+              </div>
+            </div>
+
+            <div>
+              <div class="form-group">
+                <label class="form-label" for="sampleMoveDate">Move-in Date</label>
+                <div class="input-icon-group">
+                  <div class="input-icon-left">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"></rect><line x1="16" x2="16" y1="2" y2="6"></line><line x1="8" x2="8" y1="2" y2="6"></line><line x1="3" x2="21" y1="10" y2="10"></line></svg>
+                  </div>
+                  <input type="date" id="sampleMoveDate" class="form-input" value="2026-08-15">
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="sampleNotes">Special Preferences or Roommate Notes</label>
+                <textarea id="sampleNotes" class="form-textarea" placeholder="Quiet hours, pet-friendly, furnished only..."></textarea>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- ====================================================================
+           SECTION 6: BADGES, TAGS & STATUS INDICATORS
+           ==================================================================== -->
+      <section class="demo-block">
+        <div class="demo-title">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--primary-600)" stroke-width="2"><path d="M12 2H2v10l9.29 9.29c.94.94 2.48.94 3.42 0l6.58-6.58c.94-.94.94-2.48 0-3.42L12 2Z"></path><path d="M7 7h.01"></path></svg>
+          Badges, Tags & Quick Filters
+        </div>
+        <p class="demo-desc">
+          High-readability badges and filter pills with dot indicators for instant comprehension by students.
+        </p>
+
+        <div class="preview-canvas">
+          <h5 style="margin-bottom: var(--space-3); color: var(--slate-700);">Status Badges</h5>
+          <div class="component-row" style="margin-bottom: var(--space-6);">
+            <span class="badge badge-primary"><span class="badge-dot"></span> University Partner</span>
+            <span class="badge badge-success"><span class="badge-dot"></span> Landlord Verified</span>
+            <span class="badge badge-warning"><span class="badge-dot"></span> 2 Rooms Left</span>
+            <span class="badge badge-danger"><span class="badge-dot"></span> Application Deadline Approaching</span>
+            <span class="badge badge-info"><span class="badge-dot"></span> Shuttle Included</span>
+            <span class="badge badge-neutral"><span class="badge-dot"></span> Archived</span>
+          </div>
+
+          <h5 style="margin-bottom: var(--space-3); color: var(--slate-700);">Interactive Category Filter Tags</h5>
+          <div class="component-row">
+            <button class="tag active">All Options</button>
+            <button class="tag">🎓 Near Campus (&lt;10m)</button>
+            <button class="tag">🛋️ Fully Furnished</button>
+            <button class="tag">💡 Utilities Included</button>
+            <button class="tag">🐾 Pet Friendly</button>
+            <button class="tag">⚡ High Speed Fiber</button>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- ========================================================================
+       MODAL DIALOG FOUNDATION DEMO
+       ======================================================================== -->
+  <div class="modal-backdrop" id="checklistModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-dialog">
+      <div class="card-header" style="padding: var(--space-6); margin-bottom: 0;">
+        <div style="display: flex; align-items: center; gap: var(--space-3);">
+          <div class="brand-icon-wrapper" style="width: 36px; height: 36px;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
+          </div>
+          <div>
+            <h3 id="modalTitle" style="font-size: 1.15rem; margin-bottom: 0;">Relocation Checklist</h3>
+            <span style="font-size: var(--font-size-xs); color: var(--slate-500);">Pre-departure essentials for students</span>
+          </div>
+        </div>
+        <button class="btn-icon btn-icon-sm" onclick="closeModal('checklistModal')" aria-label="Close dialog">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+
+      <div class="modal-body" style="padding: var(--space-6);">
+        <p class="text-body" style="margin-bottom: var(--space-4);">
+          Complete these priority milestones before your campus move-in day:
+        </p>
+
+        <div style="display: flex; flex-direction: column; gap: var(--space-3); margin-bottom: var(--space-4);">
+          <label style="display: flex; align-items: flex-start; gap: var(--space-3); padding: var(--space-3); background: var(--slate-50); border: 1px solid var(--slate-200); border-radius: var(--radius-md); cursor: pointer;">
+            <input type="checkbox" checked style="accent-color: var(--primary-600); margin-top: 3px;">
+            <div>
+              <div style="font-size: var(--font-size-sm); font-weight: var(--font-weight-semibold); color: var(--slate-800);">Upload Student ID & Enrollment Proof</div>
+              <div style="font-size: var(--font-size-xs); color: var(--slate-500);">Unlocks student housing discount verification</div>
+            </div>
+          </label>
+
+          <label style="display: flex; align-items: flex-start; gap: var(--space-3); padding: var(--space-3); background: var(--slate-50); border: 1px solid var(--slate-200); border-radius: var(--radius-md); cursor: pointer;">
+            <input type="checkbox" style="accent-color: var(--primary-600); margin-top: 3px;">
+            <div>
+              <div style="font-size: var(--font-size-sm); font-weight: var(--font-weight-semibold); color: var(--slate-800);">Schedule In-Person / Virtual Dorm Tour</div>
+              <div style="font-size: var(--font-size-xs); color: var(--slate-500);">Compare 3 potential shared flats near campus</div>
+            </div>
+          </label>
+
+          <label style="display: flex; align-items: flex-start; gap: var(--space-3); padding: var(--space-3); background: var(--slate-50); border: 1px solid var(--slate-200); border-radius: var(--radius-md); cursor: pointer;">
+            <input type="checkbox" style="accent-color: var(--primary-600); margin-top: 3px;">
+            <div>
+              <div style="font-size: var(--font-size-sm); font-weight: var(--font-weight-semibold); color: var(--slate-800);">Review Lease Agreement for Hidden Fees</div>
+              <div style="font-size: var(--font-size-xs); color: var(--slate-500);">Check subletting rules, deposits, and utility splits</div>
+            </div>
+          </label>
+        </div>
+      </div>
+
+      <div class="card-footer" style="padding: var(--space-4) var(--space-6); background: var(--slate-50); margin-top: 0;">
+        <span style="font-size: var(--font-size-xs); color: var(--slate-500);">1 of 3 completed</span>
+        <div style="display: flex; gap: var(--space-2);">
+          <button class="btn btn-outline btn-sm" onclick="closeModal('checklistModal')">Dismiss</button>
+          <button class="btn btn-primary btn-sm" onclick="window.showToast({title: 'Checklist Saved', message: 'Progress synced to your student profile.', type: 'success'}); closeModal('checklistModal');">
+            Save Progress
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container Root -->
+  <div class="toast-container" id="toastContainer" aria-live="polite"></div>
+
+  <!-- ========================================================================
+       GLOBAL FOOTER
+       Clean, minimal, friendly footer with campus links and status
+       ======================================================================== -->
+  <footer class="site-footer">
+    <div class="container">
+      
+      <div class="footer-top">
+        <!-- Brand & Mission Column -->
+        <div>
+          <a href="index.html" class="brand">
+            <div class="brand-icon-wrapper" style="width: 34px; height: 34px;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
+                <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
+              </svg>
+            </div>
+            <span class="brand-title">Pluto</span>
+          </a>
+          <p class="footer-brand-bio">
+            A student-first relocation platform dedicated to making university moves affordable, secure, and stress-free.
+          </p>
+        </div>
+
+        <!-- Col 1: Platform -->
+        <div>
+          <div class="footer-col-title">Platform</div>
+          <div class="footer-links">
+            <a href="#overview" class="footer-link">Housing Finder</a>
+            <a href="#cards" class="footer-link">Campus Guides</a>
+            <a href="#forms" class="footer-link">Cost Calculator</a>
+            <a href="#buttons" class="footer-link">Roommate Match</a>
+          </div>
+        </div>
+
+        <!-- Col 2: Student Resources -->
+        <div>
+          <div class="footer-col-title">Resources</div>
+          <div class="footer-links">
+            <a href="#" class="footer-link">First-Year Checklist</a>
+            <a href="#" class="footer-link">Lease Review Guide</a>
+            <a href="#" class="footer-link">Student Packing List</a>
+            <a href="#" class="footer-link">Safety & Scam Tips</a>
+          </div>
+        </div>
+
+        <!-- Col 3: Community & Legal -->
+        <div>
+          <div class="footer-col-title">Community</div>
+          <div class="footer-links">
+            <a href="#" class="footer-link">Student Ambassadors</a>
+            <a href="#" class="footer-link">Campus Support</a>
+            <a href="#" class="footer-link">Privacy Policy</a>
+            <a href="#" class="footer-link">Terms of Service</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Footer Bottom Bar -->
+      <div class="footer-bottom">
+        <div>
+          &copy; 2026 Pluto Platform. Built with modern, clean, accessible UI tokens.
+        </div>
+
+        <div style="display: flex; align-items: center; gap: var(--space-4);">
+          <div class="system-status">
+            <span class="status-pulse"></span>
+            <span>All Campus Services Operational</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/design-system.js"></script>
+</body>
+</html>
